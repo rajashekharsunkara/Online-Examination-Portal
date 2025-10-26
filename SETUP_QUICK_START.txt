@@ -1,0 +1,113 @@
+╔═══════════════════════════════════════════════════════════════╗
+║           OEP EXAM PLATFORM - QUICK START GUIDE              ║
+║              Zero-Configuration Setup for Arch Linux          ║
+╚═══════════════════════════════════════════════════════════════╝
+
+📦 WHAT YOU NEED TO KNOW:
+
+The setup script NOW AUTO-INSTALLS Docker on Arch Linux!
+No manual installation required.
+
+════════════════════════════════════════════════════════════════
+
+🚀 FASTEST PATH TO DEMO (2 steps):
+
+1. Check your system (optional):
+   $ ./check-system.sh
+
+2. Run full setup:
+   $ ./setup-demo.sh
+   
+   When asked "Would you like to automatically install Docker? (y/n)"
+   → Type: y
+   → Enter your sudo password
+   → Wait ~10-15 minutes
+   → Platform ready!
+
+════════════════════════════════════════════════════════════════
+
+📍 AFTER SETUP, ACCESS:
+
+Student App:    http://localhost:5173
+Admin Panel:    http://localhost:5174  
+API Docs:       http://localhost:8000/docs
+
+════════════════════════════════════════════════════════════════
+
+🔐 DEMO CREDENTIALS:
+
+Student:       student001 / pass123
+Instructor:    hic1 / pass123
+Admin:         admin / admin123
+
+════════════════════════════════════════════════════════════════
+
+📚 HELPFUL COMMANDS:
+
+View all commands:         ./commands.sh
+System check:              ./check-system.sh
+Full setup:                ./setup-demo.sh
+Quick restart:             ./quick-start.sh
+
+Stop platform:             docker-compose down
+Restart platform:          docker-compose restart
+View logs:                 docker-compose logs -f
+Check containers:          docker-compose ps
+
+════════════════════════════════════════════════════════════════
+
+📖 DOCUMENTATION:
+
+Installation guide:        cat INSTALLATION.md
+Scripts guide:             cat SCRIPTS_GUIDE.md
+Demo walkthrough:          cat DEMO_SETUP.md
+Upgrade notes:             cat UPGRADE_NOTES.md
+Quick reference:           cat QUICK_REFERENCE.md
+
+════════════════════════════════════════════════════════════════
+
+✨ NEW FEATURES:
+
+✅ Auto-detects Arch Linux (and Ubuntu, Fedora, etc.)
+✅ Auto-installs Docker with your permission
+✅ Configures Docker service automatically
+✅ Adds user to docker group
+✅ Verifies installation before proceeding
+✅ Comprehensive error handling and recovery
+
+════════════════════════════════════════════════════════════════
+
+🎬 DEMO FLOW (13 minutes):
+
+1. Login as student (student001)          → 1 min
+2. Take exam (7 questions)                 → 5 min
+3. View results with analytics             → 2 min
+4. Login as instructor (hic1)              → 1 min
+5. Grade essay with rubrics                → 3 min
+6. View analytics dashboard                → 1 min
+
+════════════════════════════════════════════════════════════════
+
+❓ TROUBLESHOOTING:
+
+Issue: "Permission denied"
+Fix:   newgrp docker
+
+Issue: "Docker not found" after install
+Fix:   exec bash   (or logout/login)
+
+Issue: Port already in use
+Fix:   sudo lsof -i :5173   (find and kill process)
+
+Issue: Script hangs
+Fix:   bash -x ./setup-demo.sh   (debug mode)
+
+More help: cat INSTALLATION.md
+
+════════════════════════════════════════════════════════════════
+
+🎯 READY? LET'S GO!
+
+$ ./setup-demo.sh
+
+════════════════════════════════════════════════════════════════

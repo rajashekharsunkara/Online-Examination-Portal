@@ -1,0 +1,54 @@
+.exam-timer {
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.timer-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  opacity: 0.8;
+}
+
+.timer-value {
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.1em;
+}
+
+.timer-warning-message {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.timer-normal {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.timer-warning {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.timer-critical {
+  background: #ffebee;
+  color: #c62828;
+  animation: shake 0.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}

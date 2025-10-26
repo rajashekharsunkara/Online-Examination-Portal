@@ -1,0 +1,7 @@
+# Development Keys - DO NOT USE IN PRODUCTION
+
+This directory contains sample/placeholder files showing what secrets are needed.
+
+Copy this directory to `../secrets/` and run `make gen-keys` to generate actual keys.
+
+The actual `secrets/` directory is gitignored and will never be committed.

@@ -1,0 +1,145 @@
+.question-navigator {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+  border-right: 1px solid #dee2e6;
+  overflow-y: auto;
+}
+
+.navigator-header {
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid #dee2e6;
+  background: white;
+}
+
+.navigator-header h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.progress-summary {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.progress-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #6c757d;
+  margin-top: 0.25rem;
+}
+
+.question-grid {
+  flex: 1;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: 0.5rem;
+  align-content: start;
+}
+
+.question-nav-item {
+  position: relative;
+  aspect-ratio: 1;
+  border: 2px solid #dee2e6;
+  background: white;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.question-nav-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.question-nav-item.answered {
+  background: #d4edda;
+  border-color: #28a745;
+  color: #155724;
+}
+
+.question-nav-item.flagged {
+  background: #fff3cd;
+  border-color: #ffc107;
+  color: #856404;
+}
+
+.question-nav-item.current {
+  border-color: #2563eb;
+  border-width: 3px;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.flag-icon {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  font-size: 0.75rem;
+}
+
+.navigator-legend {
+  padding: 1rem;
+  border-top: 1px solid #dee2e6;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.legend-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 2px solid;
+}
+
+.legend-box.answered {
+  background: #d4edda;
+  border-color: #28a745;
+}
+
+.legend-box.not-answered {
+  background: white;
+  border-color: #dee2e6;
+}
+
+.legend-box.flagged {
+  background: #fff3cd;
+  border-color: #ffc107;
+}
+
+.legend-box.current {
+  background: white;
+  border-color: #2563eb;
+  border-width: 3px;
+}

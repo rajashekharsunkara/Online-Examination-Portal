@@ -1,0 +1,254 @@
+/**
+ * Transfer Status Indicator Styles
+ */
+
+.transfer-status-indicator {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 320px;
+  max-width: 400px;
+  z-index: 900;
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.transfer-status-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.transfer-status-icon {
+  font-size: 1.5rem;
+}
+
+.transfer-status-text {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+}
+
+.transfer-status-details {
+  margin-top: 12px;
+}
+
+.transfer-workstations {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.transfer-workstation-label {
+  color: #666;
+  font-weight: 500;
+}
+
+.transfer-workstation-value {
+  color: #333;
+  font-weight: 600;
+  background-color: #e0e0e0;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.transfer-arrow {
+  color: #666;
+  font-weight: bold;
+}
+
+.transfer-status-message {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.4;
+  margin-top: 8px;
+}
+
+/* Status-specific styles */
+.transfer-status-pending {
+  border-left: 4px solid #ff9800;
+}
+
+.transfer-status-pending .transfer-status-icon {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.transfer-status-in-progress {
+  border-left: 4px solid #2196f3;
+}
+
+.transfer-status-completed {
+  border-left: 4px solid #4caf50;
+}
+
+.transfer-status-error {
+  border-left: 4px solid #f44336;
+}
+
+/* Progress bar */
+.transfer-progress-bar {
+  margin-top: 12px;
+  height: 6px;
+  background-color: #e0e0e0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.transfer-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2196f3, #64b5f6);
+  animation: progressIndeterminate 1.5s infinite linear;
+  width: 40%;
+}
+
+@keyframes progressIndeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(350%);
+  }
+}
+
+/* Lock overlay (full screen) */
+.transfer-lock-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+}
+
+.transfer-lock-message {
+  background: white;
+  padding: 48px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: fadeInScale 0.4s ease-out;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.transfer-lock-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: lockPulse 2s infinite;
+}
+
+@keyframes lockPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.transfer-lock-message h3 {
+  margin: 0 0 16px 0;
+  font-size: 1.75rem;
+  color: #333;
+}
+
+.transfer-lock-message p {
+  margin: 12px 0;
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.transfer-lock-instruction {
+  margin-top: 20px !important;
+  padding: 16px;
+  background-color: #e3f2fd;
+  border-radius: 6px;
+  color: #1565c0 !important;
+  font-weight: 500;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .transfer-status-indicator {
+    top: 60px;
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+    max-width: none;
+  }
+
+  .transfer-workstations {
+    font-size: 0.85rem;
+  }
+
+  .transfer-lock-message {
+    padding: 32px 24px;
+    margin: 20px;
+  }
+
+  .transfer-lock-icon {
+    font-size: 3rem;
+  }
+
+  .transfer-lock-message h3 {
+    font-size: 1.4rem;
+  }
+
+  .transfer-lock-message p {
+    font-size: 1rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .transfer-status-indicator,
+  .transfer-lock-overlay {
+    display: none;
+  }
+}
