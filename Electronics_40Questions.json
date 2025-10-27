@@ -1,0 +1,322 @@
+[
+  {
+    "question_text": "What is resistance in an electrical circuit?",
+    "option_a": "Opposition to current flow",
+    "option_b": "Flow of electrons",
+    "option_c": "Voltage source",
+    "option_d": "Power consumption",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "What is the unit of electrical resistance?",
+    "option_a": "Ampere",
+    "option_b": "Volt",
+    "option_c": "Ohm",
+    "option_d": "Watt",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What does AC stand for in electricity?",
+    "option_a": "Alternate Current",
+    "option_b": "Alternating Current",
+    "option_c": "Active Current",
+    "option_d": "Automated Current",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which material is the best conductor of electricity?",
+    "option_a": "Rubber",
+    "option_b": "Wood",
+    "option_c": "Silver",
+    "option_d": "Plastic",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What is the voltage of a standard household outlet in India?",
+    "option_a": "110V",
+    "option_b": "220V",
+    "option_c": "240V",
+    "option_d": "440V",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What does ELCB stand for?",
+    "option_a": "Earth Leakage Circuit Breaker",
+    "option_b": "Electrical Load Control Box",
+    "option_c": "Electronic Line Control Board",
+    "option_d": "Energy Level Circuit Board",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which law states V = I × R?",
+    "option_a": "Kirchhoff's Law",
+    "option_b": "Faraday's Law",
+    "option_c": "Ohm's Law",
+    "option_d": "Lenz's Law",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What is the purpose of earthing in electrical installations?",
+    "option_a": "Increase voltage",
+    "option_b": "Safety from electric shock",
+    "option_c": "Reduce power consumption",
+    "option_d": "Increase resistance",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What does MCB stand for?",
+    "option_a": "Main Circuit Board",
+    "option_b": "Miniature Circuit Breaker",
+    "option_c": "Multiple Connection Box",
+    "option_d": "Magnetic Current Breaker",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which color wire is used for neutral in electrical wiring?",
+    "option_a": "Red",
+    "option_b": "Black",
+    "option_c": "Blue",
+    "option_d": "Green",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What is the frequency of AC supply in India?",
+    "option_a": "50 Hz",
+    "option_b": "60 Hz",
+    "option_c": "100 Hz",
+    "option_d": "25 Hz",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which device is used to step up or step down voltage?",
+    "option_a": "Resistor",
+    "option_b": "Capacitor",
+    "option_c": "Transformer",
+    "option_d": "Inductor",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What is the unit of electrical power?",
+    "option_a": "Joule",
+    "option_b": "Watt",
+    "option_c": "Ampere",
+    "option_d": "Volt",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which material is used as an insulator?",
+    "option_a": "Copper",
+    "option_b": "Aluminum",
+    "option_c": "PVC",
+    "option_d": "Iron",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What is the purpose of a fuse in electrical circuits?",
+    "option_a": "Increase current",
+    "option_b": "Protect from overcurrent",
+    "option_c": "Store energy",
+    "option_d": "Generate voltage",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which color wire is used for earth/ground connection?",
+    "option_a": "Red",
+    "option_b": "Black",
+    "option_c": "Blue",
+    "option_d": "Green/Yellow",
+    "correct_answer": "D"
+  },
+  {
+    "question_text": "What does kWh stand for?",
+    "option_a": "Kilowatt hour",
+    "option_b": "Kilo watt heat",
+    "option_c": "Kinetic watt hour",
+    "option_d": "Kilo wire heat",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which device converts AC to DC?",
+    "option_a": "Inverter",
+    "option_b": "Rectifier",
+    "option_c": "Transformer",
+    "option_d": "Amplifier",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is the standard voltage for three-phase supply in India?",
+    "option_a": "220V",
+    "option_b": "380V",
+    "option_c": "415V",
+    "option_d": "440V",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "Which instrument is used to measure electrical current?",
+    "option_a": "Voltmeter",
+    "option_b": "Ammeter",
+    "option_c": "Ohmmeter",
+    "option_d": "Wattmeter",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is the purpose of a starter in electrical motors?",
+    "option_a": "Stop the motor",
+    "option_b": "Control starting current",
+    "option_c": "Increase speed",
+    "option_d": "Generate power",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which type of circuit has only one path for current flow?",
+    "option_a": "Parallel circuit",
+    "option_b": "Series circuit",
+    "option_c": "Complex circuit",
+    "option_d": "Mixed circuit",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is the power factor in AC circuits?",
+    "option_a": "Ratio of real to apparent power",
+    "option_b": "Total resistance",
+    "option_c": "Voltage drop",
+    "option_d": "Current flow rate",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which device is used to measure insulation resistance?",
+    "option_a": "Ammeter",
+    "option_b": "Voltmeter",
+    "option_c": "Megger",
+    "option_d": "Multimeter",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What is the minimum safe distance for overhead power lines?",
+    "option_a": "1 meter",
+    "option_b": "2 meters",
+    "option_c": "3 meters",
+    "option_d": "5 meters",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "Which type of wiring is most commonly used in residential buildings?",
+    "option_a": "Cleat wiring",
+    "option_b": "Conduit wiring",
+    "option_c": "Batten wiring",
+    "option_d": "CTS wiring",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is the purpose of a capacitor in AC circuits?",
+    "option_a": "Store electrical energy",
+    "option_b": "Increase resistance",
+    "option_c": "Generate current",
+    "option_d": "Reduce voltage",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which safety device protects against earth leakage?",
+    "option_a": "MCB",
+    "option_b": "Fuse",
+    "option_c": "RCCB",
+    "option_d": "Contactor",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What is the typical current rating of a domestic MCB?",
+    "option_a": "2-5 A",
+    "option_b": "6-32 A",
+    "option_c": "40-63 A",
+    "option_d": "100-200 A",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which motor is most commonly used in fans?",
+    "option_a": "DC motor",
+    "option_b": "Single phase induction motor",
+    "option_c": "Three phase motor",
+    "option_d": "Stepper motor",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What does IP rating indicate in electrical equipment?",
+    "option_a": "Input Power",
+    "option_b": "Ingress Protection",
+    "option_c": "Internal Processing",
+    "option_d": "Insulation Performance",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which cable is used for underground electrical installations?",
+    "option_a": "PVC cable",
+    "option_b": "Armoured cable",
+    "option_c": "Flexible cable",
+    "option_d": "Ribbon cable",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is the purpose of a contactor in electrical systems?",
+    "option_a": "Measure voltage",
+    "option_b": "Switch heavy loads remotely",
+    "option_c": "Reduce current",
+    "option_d": "Store energy",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which factor affects the resistance of a conductor?",
+    "option_a": "Length",
+    "option_b": "Cross-sectional area",
+    "option_c": "Temperature",
+    "option_d": "All of the above",
+    "correct_answer": "D"
+  },
+  {
+    "question_text": "What is the purpose of a relay in electrical circuits?",
+    "option_a": "Generate power",
+    "option_b": "Control circuit with low power signal",
+    "option_c": "Increase voltage",
+    "option_d": "Store current",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which type of load has unity power factor?",
+    "option_a": "Inductive load",
+    "option_b": "Capacitive load",
+    "option_c": "Resistive load",
+    "option_d": "Mixed load",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What is the standard color code for phase wire in India?",
+    "option_a": "Blue",
+    "option_b": "Red/Yellow/Black",
+    "option_c": "Green",
+    "option_d": "White",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which device converts DC to AC?",
+    "option_a": "Rectifier",
+    "option_b": "Inverter",
+    "option_c": "Transformer",
+    "option_d": "Converter",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is the purpose of a neutral wire?",
+    "option_a": "Provide return path for current",
+    "option_b": "Increase voltage",
+    "option_c": "Act as earth",
+    "option_d": "Store energy",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which type of earthing is most effective?",
+    "option_a": "Plate earthing",
+    "option_b": "Pipe earthing",
+    "option_c": "Rod earthing",
+    "option_d": "All are equally effective",
+    "correct_answer": "D"
+  }
+]

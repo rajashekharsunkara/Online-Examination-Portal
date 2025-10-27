@@ -1,0 +1,86 @@
+{
+  "trade_id": 20,
+  "trade_name": "Electrical Installations",
+  "questions": [
+    {
+      "question_text": "What is the purpose of earthing in electrical installations?",
+      "option_a": "To increase voltage",
+      "option_b": "To prevent electric shock",
+      "option_c": "To save electricity",
+      "option_d": "To increase current flow",
+      "correct_answer": "B"
+    },
+    {
+      "question_text": "Which material is commonly used for electrical wiring?",
+      "option_a": "Iron",
+      "option_b": "Steel",
+      "option_c": "Copper",
+      "option_d": "Aluminum alloy",
+      "correct_answer": "C"
+    },
+    {
+      "question_text": "What does AC stand for in electrical terms?",
+      "option_a": "Automatic Current",
+      "option_b": "Alternating Current",
+      "option_c": "Adjusted Current",
+      "option_d": "Active Current",
+      "correct_answer": "B"
+    },
+    {
+      "question_text": "The color code for neutral wire in single phase is:",
+      "option_a": "Red",
+      "option_b": "Black",
+      "option_c": "Blue",
+      "option_d": "Green",
+      "correct_answer": "C"
+    },
+    {
+      "question_text": "What is the function of a circuit breaker?",
+      "option_a": "To increase current",
+      "option_b": "To protect against overload",
+      "option_c": "To store electricity",
+      "option_d": "To measure voltage",
+      "correct_answer": "B"
+    },
+    {
+      "question_text": "The unit of electrical power is:",
+      "option_a": "Volt",
+      "option_b": "Ampere",
+      "option_c": "Watt",
+      "option_d": "Ohm",
+      "correct_answer": "C"
+    },
+    {
+      "question_text": "Which device is used to measure electrical current?",
+      "option_a": "Voltmeter",
+      "option_b": "Ammeter",
+      "option_c": "Ohmmeter",
+      "option_d": "Wattmeter",
+      "correct_answer": "B"
+    },
+    {
+      "question_text": "The frequency of AC supply in India is:",
+      "option_a": "25 Hz",
+      "option_b": "50 Hz",
+      "option_c": "60 Hz",
+      "option_d": "100 Hz",
+      "correct_answer": "B"
+    },
+    {
+      "question_text": "Which type of cable is used for underground wiring?",
+      "option_a": "PVC cable",
+      "option_b": "Rubber cable",
+      "option_c": "Armoured cable",
+      "option_d": "Overhead cable",
+      "correct_answer": "C"
+    },
+    {
+      "question_text": "What is the standard voltage for domestic supply in India?",
+      "option_a": "110V",
+      "option_b": "220V",
+      "option_c": "330V",
+      "option_d": "440V",
+      "correct_answer": "B"
+    }
+  ]
+}

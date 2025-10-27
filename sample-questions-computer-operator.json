@@ -1,0 +1,126 @@
+{
+  "trade_id": 12,
+  "trade_name": "Cloud Computing",
+  "questions": [
+    {
+      "question_text": "Which of the following is an input device?",
+      "option_a": "Monitor",
+      "option_b": "Printer",
+      "option_c": "Keyboard",
+      "option_d": "Speaker",
+      "correct_answer": "C"
+    },
+    {
+      "question_text": "What does RAM stand for?",
+      "option_a": "Read Access Memory",
+      "option_b": "Random Access Memory",
+      "option_c": "Rapid Access Memory",
+      "option_d": "Read And Modify",
+      "correct_answer": "B"
+    },
+    {
+      "question_text": "Which key combination is used to copy text?",
+      "option_a": "Ctrl + C",
+      "option_b": "Ctrl + X",
+      "option_c": "Ctrl + V",
+      "option_d": "Ctrl + Z",
+      "correct_answer": "A"
+    },
+    {
+      "question_text": "What is the brain of the computer?",
+      "option_a": "RAM",
+      "option_b": "ROM",
+      "option_c": "CPU",
+      "option_d": "Hard Disk",
+      "correct_answer": "C"
+    },
+    {
+      "question_text": "Which software is used for word processing?",
+      "option_a": "MS Excel",
+      "option_b": "MS Word",
+      "option_c": "MS PowerPoint",
+      "option_d": "MS Paint",
+      "correct_answer": "B"
+    },
+    {
+      "question_text": "What does WWW stand for?",
+      "option_a": "World Wide Web",
+      "option_b": "World Wire Web",
+      "option_c": "Wide World Web",
+      "option_d": "Web World Wide",
+      "correct_answer": "A"
+    },
+    {
+      "question_text": "Which is the shortcut key for Save?",
+      "option_a": "Ctrl + A",
+      "option_b": "Ctrl + S",
+      "option_c": "Ctrl + P",
+      "option_d": "Ctrl + O",
+      "correct_answer": "B"
+    },
+    {
+      "question_text": "What is the full form of PDF?",
+      "option_a": "Portable Document Format",
+      "option_b": "Public Document Format",
+      "option_c": "Private Data File",
+      "option_d": "Personal Document File",
+      "correct_answer": "A"
+    },
+    {
+      "question_text": "Which device is used to connect to the internet?",
+      "option_a": "Keyboard",
+      "option_b": "Mouse",
+      "option_c": "Modem",
+      "option_d": "Scanner",
+      "correct_answer": "C"
+    },
+    {
+      "question_text": "What is the extension of an Excel file?",
+      "option_a": ".doc",
+      "option_b": ".xlsx",
+      "option_c": ".ppt",
+      "option_d": ".pdf",
+      "correct_answer": "B"
+    },
+    {
+      "question_text": "Which key is used to delete text to the right of cursor?",
+      "option_a": "Backspace",
+      "option_b": "Delete",
+      "option_c": "Enter",
+      "option_d": "Shift",
+      "correct_answer": "B"
+    },
+    {
+      "question_text": "What does OS stand for?",
+      "option_a": "Operating System",
+      "option_b": "Open Source",
+      "option_c": "Online Service",
+      "option_d": "Optical System",
+      "correct_answer": "A"
+    },
+    {
+      "question_text": "Which is an example of an operating system?",
+      "option_a": "MS Word",
+      "option_b": "Windows",
+      "option_c": "Chrome",
+      "option_d": "Adobe",
+      "correct_answer": "B"
+    },
+    {
+      "question_text": "What is used to protect a computer from viruses?",
+      "option_a": "Firewall",
+      "option_b": "Antivirus",
+      "option_c": "Modem",
+      "option_d": "Router",
+      "correct_answer": "B"
+    },
+    {
+      "question_text": "Which of the following is cloud storage?",
+      "option_a": "Hard Disk",
+      "option_b": "USB Drive",
+      "option_c": "Google Drive",
+      "option_d": "CD ROM",
+      "correct_answer": "C"
+    }
+  ]
+}

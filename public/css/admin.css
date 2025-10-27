@@ -1,0 +1,206 @@
+/* Bootstrap 5 Custom Styles for Admin Dashboard */
+
+/* Login Section Background */
+#loginSection {
+    background: linear-gradient(135deg, #1e3a8a 0%, #0d9488 100%);
+    min-height: 100vh;
+}
+
+#loginSection.d-none {
+    display: none !important;
+}
+
+#dashboardSection {
+    display: none;
+}
+
+#dashboardSection.d-block {
+    display: block !important;
+}
+
+/* Icon Circles */
+.icon-circle {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+/* Stat Cards Hover Effect */
+.stat-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Tab Navigation Styling */
+.nav-tabs {
+    border-bottom: 2px solid #dee2e6;
+}
+
+.nav-tabs .nav-link {
+    color: #6c757d;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 1rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #0d9488;
+    background: #f8f9fa;
+    border-bottom-color: #0d9488;
+}
+
+.nav-tabs .nav-link.active {
+    color: #0d9488;
+    background: white;
+    border-bottom-color: #0d9488;
+    font-weight: 600;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Alert Items */
+.alert-item {
+    background: #fff5f5;
+    border-left: 4px solid #dc3545;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: 0.375rem;
+    animation: slideIn 0.3s ease;
+}
+
+.alert-item.new {
+    animation: pulse 1s ease-in-out 3;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { background: #fff5f5; }
+    50% { background: #ffe0e0; }
+}
+
+/* Score Highlighting */
+.score-highlight {
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-weight: 700;
+    display: inline-block;
+}
+
+.score-high {
+    background: linear-gradient(135deg, #198754 0%, #146c43 100%) !important;
+}
+
+.score-medium {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%) !important;
+}
+
+.score-low {
+    background: linear-gradient(135deg, #dc3545 0%, #bb2d3b 100%) !important;
+}
+
+/* Table Enhancements */
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Status Badges */
+.status-active {
+    background-color: #d1e7dd !important;
+    color: #0f5132 !important;
+}
+
+.status-completed {
+    background-color: #cfe2ff !important;
+    color: #084298 !important;
+}
+
+.status-kicked {
+    background-color: #f8d7da !important;
+    color: #842029 !important;
+}
+
+/* Form Sections */
+.form-section {
+    background: white;
+    border-radius: 0.375rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Code Example Blocks */
+.code-example {
+    background: #2d3748;
+    color: #e2e8f0;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+/* Question List Items */
+#questionsList > div {
+    background: #f8f9fa;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border-left: 4px solid #0d6efd;
+    border-radius: 0.375rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .nav-tabs .nav-link {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    .icon-circle {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .stat-card h2 {
+        font-size: 1.5rem;
+    }
+}

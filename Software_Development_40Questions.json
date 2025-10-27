@@ -1,0 +1,322 @@
+[
+  {
+    "question_text": "What does OOP stand for in programming?",
+    "option_a": "Object-Oriented Programming",
+    "option_b": "Online Operating Platform",
+    "option_c": "Open Output Protocol",
+    "option_d": "Object Operation Process",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which programming language is known as the 'mother of all languages'?",
+    "option_a": "Python",
+    "option_b": "C",
+    "option_c": "Java",
+    "option_d": "Assembly",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is the time complexity of binary search?",
+    "option_a": "O(n)",
+    "option_b": "O(log n)",
+    "option_c": "O(n²)",
+    "option_d": "O(1)",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which data structure uses LIFO principle?",
+    "option_a": "Queue",
+    "option_b": "Stack",
+    "option_c": "Array",
+    "option_d": "Tree",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What does SQL stand for?",
+    "option_a": "Structured Query Language",
+    "option_b": "Simple Question Language",
+    "option_c": "System Quality Logic",
+    "option_d": "Standard Queue List",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which design pattern ensures a class has only one instance?",
+    "option_a": "Singleton",
+    "option_b": "Factory",
+    "option_c": "Observer",
+    "option_d": "Strategy",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "What is the purpose of a constructor in a class?",
+    "option_a": "Initialize objects",
+    "option_b": "Destroy objects",
+    "option_c": "Copy objects",
+    "option_d": "Compare objects",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which sorting algorithm has the best average time complexity?",
+    "option_a": "Bubble Sort",
+    "option_b": "Quick Sort",
+    "option_c": "Selection Sort",
+    "option_d": "Insertion Sort",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What does API stand for?",
+    "option_a": "Application Programming Interface",
+    "option_b": "Advanced Program Integration",
+    "option_c": "Automated Process Indicator",
+    "option_d": "Application Protocol Internet",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which version control system is most popular?",
+    "option_a": "SVN",
+    "option_b": "Git",
+    "option_c": "Mercurial",
+    "option_d": "CVS",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is polymorphism in OOP?",
+    "option_a": "Many forms of same function",
+    "option_b": "Single form of function",
+    "option_c": "No forms of function",
+    "option_d": "Fixed form of function",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which protocol is used for secure web communication?",
+    "option_a": "HTTP",
+    "option_b": "FTP",
+    "option_c": "HTTPS",
+    "option_d": "SMTP",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What is the default port for HTTP?",
+    "option_a": "443",
+    "option_b": "8080",
+    "option_c": "80",
+    "option_d": "3000",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "Which keyword is used to inherit a class in Java?",
+    "option_a": "implements",
+    "option_b": "extends",
+    "option_c": "inherits",
+    "option_d": "derives",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What does IDE stand for?",
+    "option_a": "Integrated Development Environment",
+    "option_b": "Internet Data Exchange",
+    "option_c": "Internal Design Editor",
+    "option_d": "Indexed Database Engine",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which of these is not a programming paradigm?",
+    "option_a": "Functional",
+    "option_b": "Object-Oriented",
+    "option_c": "Procedural",
+    "option_d": "Systematic",
+    "correct_answer": "D"
+  },
+  {
+    "question_text": "What is recursion in programming?",
+    "option_a": "Function calling itself",
+    "option_b": "Function calling another",
+    "option_c": "Loop iteration",
+    "option_d": "Variable declaration",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which data structure is best for BFS traversal?",
+    "option_a": "Stack",
+    "option_b": "Queue",
+    "option_c": "Array",
+    "option_d": "Linked List",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What does CRUD stand for in database operations?",
+    "option_a": "Create Read Update Delete",
+    "option_b": "Copy Remove Update Data",
+    "option_c": "Connect Retrieve Upload Download",
+    "option_d": "Create Register Use Deploy",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which testing approach tests individual units?",
+    "option_a": "Integration Testing",
+    "option_b": "Unit Testing",
+    "option_c": "System Testing",
+    "option_d": "Acceptance Testing",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is the purpose of abstraction in OOP?",
+    "option_a": "Hide implementation details",
+    "option_b": "Show all details",
+    "option_c": "Delete unused code",
+    "option_d": "Copy code blocks",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which language is primarily used for Android development?",
+    "option_a": "Swift",
+    "option_b": "Kotlin",
+    "option_c": "Python",
+    "option_d": "Ruby",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What does JSON stand for?",
+    "option_a": "JavaScript Object Notation",
+    "option_b": "Java Serialized Object Network",
+    "option_c": "Just Simple Object Names",
+    "option_d": "Joint System Online Network",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which of these is a NoSQL database?",
+    "option_a": "MySQL",
+    "option_b": "PostgreSQL",
+    "option_c": "MongoDB",
+    "option_d": "Oracle",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What is the purpose of indexing in databases?",
+    "option_a": "Slow down queries",
+    "option_b": "Speed up queries",
+    "option_c": "Delete records",
+    "option_d": "Update records",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which HTTP method is used to retrieve data?",
+    "option_a": "POST",
+    "option_b": "PUT",
+    "option_c": "GET",
+    "option_d": "DELETE",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What does MVC stand for?",
+    "option_a": "Model View Controller",
+    "option_b": "Multiple Variable Class",
+    "option_c": "Main Version Control",
+    "option_d": "Master View Component",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which algorithm is used for shortest path?",
+    "option_a": "Bubble Sort",
+    "option_b": "Dijkstra's Algorithm",
+    "option_c": "Binary Search",
+    "option_d": "Quick Sort",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is encapsulation in OOP?",
+    "option_a": "Wrapping data and methods",
+    "option_b": "Separating all methods",
+    "option_c": "Deleting unused data",
+    "option_d": "Copying all variables",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which loop executes at least once?",
+    "option_a": "while loop",
+    "option_b": "for loop",
+    "option_c": "do-while loop",
+    "option_d": "foreach loop",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What does REST stand for in API?",
+    "option_a": "Representational State Transfer",
+    "option_b": "Remote System Transfer",
+    "option_c": "Repeated State Transmission",
+    "option_d": "Real Estate Software Technology",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which principle states 'Open for extension, Closed for modification'?",
+    "option_a": "Single Responsibility",
+    "option_b": "Open/Closed Principle",
+    "option_c": "Liskov Substitution",
+    "option_d": "Interface Segregation",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is Big O notation used for?",
+    "option_a": "Measure algorithm efficiency",
+    "option_b": "Count variables",
+    "option_c": "Name functions",
+    "option_d": "Delete files",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which of these is a linear data structure?",
+    "option_a": "Tree",
+    "option_b": "Graph",
+    "option_c": "Queue",
+    "option_d": "Hash Table",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What does SOLID stand for in OOP principles?",
+    "option_a": "Software Object Logic Implementation Design",
+    "option_b": "Set of design principles",
+    "option_c": "System Operation Logic Integration Data",
+    "option_d": "Structured Object Layer Interface Database",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which HTTP status code indicates success?",
+    "option_a": "404",
+    "option_b": "500",
+    "option_c": "200",
+    "option_d": "301",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What is garbage collection in programming?",
+    "option_a": "Manual memory cleanup",
+    "option_b": "Automatic memory management",
+    "option_c": "Code deletion",
+    "option_d": "File removal",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which pattern is used for object creation?",
+    "option_a": "Observer",
+    "option_b": "Factory",
+    "option_c": "Strategy",
+    "option_d": "Adapter",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What does DRY principle stand for?",
+    "option_a": "Don't Repeat Yourself",
+    "option_b": "Do Revise Yearly",
+    "option_c": "Delete Redundant Yearly",
+    "option_d": "Design Reusable Years",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which of these is a compiled language?",
+    "option_a": "Python",
+    "option_b": "JavaScript",
+    "option_c": "C++",
+    "option_d": "Ruby",
+    "correct_answer": "C"
+  }
+]

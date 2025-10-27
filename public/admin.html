@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Examination Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <!-- Login Section -->
+    <div id="loginSection" class="min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-body text-center py-4">
+                            <h1 class="h3 fw-bold text-primary mb-2">Admin Dashboard</h1>
+                            <a href="/" class="text-decoration-none"><i class="bi bi-arrow-left me-1"></i>Back to Home</a>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-lg border-0">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <i class="bi bi-shield-lock text-primary" style="font-size: 3rem;"></i>
+                                <h2 class="mt-3 fw-bold">Admin Login</h2>
+                            </div>
+                            <form id="adminLoginForm">
+                                <div class="mb-3">
+                                    <label for="username" class="form-label fw-semibold">Username</label>
+                                    <input type="text" class="form-control form-control-lg" id="username" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="password" class="form-label fw-semibold">Password</label>
+                                    <input type="password" class="form-control form-control-lg" id="password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg w-100">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                                </button>
+                                <div id="loginError" class="alert alert-danger mt-3" style="display: none;"></div>
+                            </form>
+                            <p class="text-center text-muted mt-3 small">Default: admin / admin123</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboardSection" style="display: none;">
+        <!-- Header -->
+        <nav class="navbar navbar-dark bg-primary shadow-sm">
+            <div class="container-fluid px-4">
+                <span class="navbar-brand mb-0 h1"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</span>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="text-white"><i class="bi bi-person-circle me-2"></i><span id="adminUsername"></span></span>
+                    <button onclick="logout()" class="btn btn-outline-light btn-sm">
+                        <i class="bi bi-box-arrow-right me-1"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs bg-white shadow-sm sticky-top" style="z-index: 100;">
+            <li class="nav-item">
+                <button class="nav-link active" onclick="showTab('overview')"><i class="bi bi-grid-3x3-gap me-2"></i>Overview</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" onclick="showTab('centers')"><i class="bi bi-building me-2"></i>Centers</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" onclick="showTab('students')"><i class="bi bi-people me-2"></i>Students</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" onclick="showTab('exams')"><i class="bi bi-gear me-2"></i>Trades</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" onclick="showTab('questions')"><i class="bi bi-question-circle me-2"></i>Questions</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" onclick="showTab('results')"><i class="bi bi-bar-chart me-2"></i>Results</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" onclick="showTab('proctoring')"><i class="bi bi-camera-video me-2"></i>Proctoring</button>
+            </li>
+        </ul>
+
+        <!-- Overview Tab -->
+        <div id="overviewTab" class="tab-content active">
+            <div class="container-fluid p-4">
+                <h2 class="mb-4">System Overview</h2>
+                <div class="row g-4 mb-4">
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm h-100 stat-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="text-muted text-uppercase small mb-1">Total Centers</p>
+                                        <h2 class="mb-0 fw-bold" id="totalCenters">0</h2>
+                                    </div>
+                                    <div class="icon-circle bg-primary bg-opacity-10">
+                                        <i class="bi bi-building text-primary fs-2"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm h-100 stat-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="text-muted text-uppercase small mb-1">Total Exams</p>
+                                        <h2 class="mb-0 fw-bold" id="totalExams">0</h2>
+                                    </div>
+                                    <div class="icon-circle bg-info bg-opacity-10">
+                                        <i class="bi bi-file-text text-info fs-2"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm h-100 stat-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="text-muted text-uppercase small mb-1">Active Sessions</p>
+                                        <h2 class="mb-0 fw-bold" id="activeSessions">0</h2>
+                                    </div>
+                                    <div class="icon-circle bg-info bg-opacity-10">
+                                        <i class="bi bi-people text-info fs-2"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm h-100 stat-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="text-muted text-uppercase small mb-1">Proctoring Alerts</p>
+                                        <h2 class="mb-0 fw-bold text-danger" id="proctoringAlerts">0</h2>
+                                    </div>
+                                    <div class="icon-circle bg-danger bg-opacity-10">
+                                        <i class="bi bi-exclamation-triangle text-danger fs-2"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Alerts -->
+                <div class="card border-danger shadow-sm">
+                    <div class="card-header bg-danger bg-opacity-10 border-danger">
+                        <h3 class="h5 mb-0 text-danger"><i class="bi bi-broadcast me-2"></i>Live Proctoring Alerts</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="alertsContainer" style="max-height: 400px; overflow-y: auto;">
+                            <p class="text-muted text-center py-4">No active alerts</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Centers Tab -->
+        <div id="centersTab" class="tab-content">
+            <div class="container-fluid p-4">
+                <h2 class="mb-4">Examination Centers</h2>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>District</th>
+                                        <th>Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="centersTable">
+                                    <tr><td colspan="4" class="text-center py-4">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Students Tab -->
+        <div id="studentsTab" class="tab-content">
+            <div class="container-fluid p-4">
+                <h2 class="mb-4">All Registered Students</h2>
+                
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-people me-2"></i>Student Database</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-sm">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Admit Card ID</th>
+                                        <th>Name</th>
+                                        <th>Date of Birth</th>
+                                        <th>Trade</th>
+                                        <th>Center</th>
+                                        <th>District</th>
+                                        <th>Exam Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentsTable">
+                                    <tr><td colspan="7" class="text-center py-4">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Trades Tab -->
+        <div id="examsTab" class="tab-content">
+            <div class="container-fluid p-4">
+                <h2 class="mb-4">Manage Trades</h2>
+                
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>
+                    <strong>Note:</strong> Trade settings control exam parameters. Each trade has its own question bank. Students get random questions from their trade's bank.
+                </div>
+
+                <!-- All Trades -->
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-gear me-2"></i>Trade Settings (48 Trades from India Skills)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-sm">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Trade Name</th>
+                                        <th>Duration (min)</th>
+                                        <th>Questions per Exam</th>
+                                        <th>Marks per Question</th>
+                                        <th>Total Marks</th>
+                                        <th>Questions in Bank</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tradesTable">
+                                    <tr><td colspan="7" class="text-center py-4">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Questions Tab -->
+        <div id="questionsTab" class="tab-content">
+            <div class="container-fluid p-4">
+                <h2 class="mb-4">Upload Questions to Question Bank</h2>
+                
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>
+                    <strong>How it works:</strong> Upload questions to a trade's question bank. When students take exams, they get random questions from their trade's bank.
+                </div>
+
+                <!-- Select Trade -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <label for="questionTrade" class="form-label fw-bold">Select Trade</label>
+                        <select class="form-select form-select-lg" id="questionTrade" required>
+                            <option value="">Select Trade to Upload Questions</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- JSON File Upload -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-upload me-2"></i>Option 1: Upload JSON File</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="jsonFile" class="form-label">Choose JSON File</label>
+                            <input type="file" class="form-control" id="jsonFile" accept=".json">
+                        </div>
+                        <button type="button" onclick="uploadJsonFile()" class="btn btn-success">
+                            <i class="bi bi-cloud-upload me-2"></i>Upload JSON File
+                        </button>
+                    </div>
+                </div>
+
+                <!-- JSON Paste Upload -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="bi bi-code-square me-2"></i>Option 2: Paste JSON Content</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">Paste questions in JSON format. Example:</p>
+                        <div class="code-example mb-3">[
+  {
+    "question_text": "What is 2+2?",
+    "option_a": "3",
+    "option_b": "4",
+    "option_c": "5",
+    "option_d": "6",
+    "correct_answer": "B"
+  }
+]</div>
+                        <form>
+                            <div class="mb-3">
+                                <textarea class="form-control" id="questionsJson" rows="10" placeholder="Paste JSON here" style="font-family: monospace;"></textarea>
+                            </div>
+                            <button type="button" onclick="uploadQuestions()" class="btn btn-info text-white">
+                                <i class="bi bi-check-circle me-2"></i>Upload Questions
+                            </button>
+                        </form>
+                        <div id="uploadResult" class="mt-3"></div>
+                    </div>
+                </div>
+
+                <!-- Existing Questions -->
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <h5 class="mb-0">Existing Questions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="questionsList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Tab -->
+        <div id="resultsTab" class="tab-content">
+            <div class="container-fluid p-4">
+                <h2 class="mb-4">Examination Results</h2>
+                
+                <!-- Filters -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="bi bi-funnel me-2"></i>Filters</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-2">
+                                <select class="form-select" id="filterDistrict" onchange="filterResults()">
+                                    <option value="">All Districts</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-select" id="filterCenter" onchange="filterResults()">
+                                    <option value="">All Centers</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-select" id="filterTrade" onchange="filterResults()">
+                                    <option value="">All Trades</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-select" id="filterExam" onchange="filterResults()">
+                                    <option value="">All Exams</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-select" id="filterStatus" onchange="filterResults()">
+                                    <option value="">All Statuses</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="active">Active</option>
+                                    <option value="kicked">Kicked</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" onclick="resetFilters()" class="btn btn-secondary w-100">
+                                    <i class="bi bi-x-circle me-2"></i>Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="button" onclick="exportResults('csv')" class="btn btn-outline-success">
+                                <i class="bi bi-file-earmark-spreadsheet me-2"></i>Export CSV
+                            </button>
+                            <button type="button" onclick="exportResults('excel')" class="btn btn-outline-primary">
+                                <i class="bi bi-file-earmark-excel me-2"></i>Export Excel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Table -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Admit Card</th>
+                                        <th>Student Name</th>
+                                        <th>District</th>
+                                        <th>Center</th>
+                                        <th>Trade</th>
+                                                        <th>Exam</th>
+                                        <th class="score-column">Score</th>
+                                        <th>Answered</th>
+                                        <th>Warnings</th>
+                                        <th>Status</th>
+                                        <th>Started</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="resultsTable">
+                                    <tr><td colspan="11" class="text-center py-4">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Proctoring Tab -->
+        <div id="proctoringTab" class="tab-content">
+            <div class="container-fluid p-4">
+                <h2 class="mb-4">Proctoring Violation Logs</h2>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Admit Card</th>
+                                        <th>Student Name</th>
+                                        <th>Trade</th>
+                                        <th>Violation Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="proctoringTable">
+                                    <tr><td colspan="5" class="text-center py-4">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <script src="/js/admin.js"></script>
+</body>
+</html>

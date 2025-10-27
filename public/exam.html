@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examination in Progress</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/exam.css">
+</head>
+<body>
+    <div id="examContainer" class="d-flex flex-column vh-100">
+        <!-- Exam Header -->
+        <div class="exam-header bg-primary text-white p-3">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="d-flex flex-wrap gap-3">
+                            <span><i class="bi bi-person-fill me-1"></i><strong id="studentNameDisplay"></strong></span>
+                            <span><i class="bi bi-file-text-fill me-1"></i><span id="examTitleDisplay"></span></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="exam-timer fs-4 fw-bold">
+                            <i class="bi bi-clock-fill me-2"></i><span id="timer">00:00</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-end">
+                        <div class="warning-indicator">
+                            <span class="badge bg-danger text-white fs-6">
+                                <i class="bi bi-exclamation-triangle-fill me-1"></i>Warnings: <span id="warningCount">0</span>/3
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exam Content -->
+        <div class="exam-content flex-grow-1 overflow-hidden">
+            <div class="container-fluid h-100">
+                <div class="row h-100 g-3 p-3">
+                    <!-- Question Section -->
+                    <div class="col-lg-9">
+                        <div class="card h-100 shadow-sm border-0">
+                            <div class="card-header bg-light border-0">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Question <span id="currentQuestionNum">1</span> of <span id="totalQuestions">0</span></span>
+                                    <span class="badge bg-primary">Marks: <span id="currentMarks">4</span></span>
+                                </div>
+                            </div>
+                            <div class="card-body p-4 overflow-auto">
+                                <div class="question-text fs-5 mb-4" id="questionText"></div>
+                                <div class="options" id="optionsContainer"></div>
+                            </div>
+                            <div class="card-footer bg-white border-0 p-3">
+                                <div class="d-flex gap-2 justify-content-between">
+                                    <button id="prevBtn" class="btn btn-outline-primary">
+                                        <i class="bi bi-arrow-left me-1"></i>Previous
+                                    </button>
+                                    <button id="submitExamBtn" class="btn btn-danger">
+                                        <i class="bi bi-check-circle me-1"></i>Submit Exam
+                                    </button>
+                                    <button id="nextBtn" class="btn btn-outline-primary">
+                                        Next<i class="bi bi-arrow-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question Palette -->
+                    <div class="col-lg-3">
+                        <div class="card h-100 shadow-sm border-0">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="bi bi-grid-3x3-gap-fill me-2"></i>Question Palette</h5>
+                            </div>
+                            <div class="card-body p-3 overflow-auto">
+                                <div id="questionPalette" class="d-grid gap-2" style="grid-template-columns: repeat(4, 1fr);"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Violation Warning Modal -->
+    <div class="modal fade" id="violationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-danger">
+                <div class="modal-header bg-danger bg-opacity-10 border-danger">
+                    <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>Proctoring Violation Detected!</h5>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <p id="violationMessage" class="mb-3"></p>
+                    <div class="alert alert-danger mb-3">
+                        <strong>Warning <span id="modalWarningCount">0</span> of 3</strong>
+                    </div>
+                    <p class="text-danger small mb-0">After 3 warnings, you will be automatically kicked out of the exam.</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="acknowledgeBtn" type="button" class="btn btn-warning w-100">I Understand</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kicked Out Modal -->
+    <div class="modal fade" id="kickedModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-danger">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="bi bi-x-circle-fill me-2"></i>Exam Terminated</h5>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <i class="bi bi-x-circle text-danger" style="font-size: 4rem;"></i>
+                    <p class="mt-3 mb-2">You have been removed from the examination due to multiple proctoring violations.</p>
+                    <p class="text-muted">Your exam has been submitted automatically.</p>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="window.location.href='/student'" class="btn btn-secondary w-100">Return to Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Confirmation Modal -->
+    <div class="modal fade" id="submitConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="bi bi-question-circle-fill me-2"></i>Confirm Submission</h5>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <p class="mb-3">Are you sure you want to submit your exam?</p>
+                    <div class="alert alert-info">
+                        You have answered <strong><span id="answeredCount">0</span></strong> out of <strong><span id="totalQuestionsConfirm">0</span></strong> questions.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelSubmitBtn" type="button" class="btn btn-secondary">Cancel</button>
+                    <button id="confirmSubmitBtn" type="button" class="btn btn-primary">Yes, Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div class="modal fade" id="resultModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-primary">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="bi bi-check-circle-fill me-2"></i>Exam Submitted Successfully</h5>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <i class="bi bi-check-circle text-primary" style="font-size: 4rem;"></i>
+                    <div class="mt-4">
+                        <h4>Your Score: <span class="badge bg-primary fs-4"><span id="finalScore">0</span> / <span id="totalMarks">0</span></span></h4>
+                        <p class="text-muted mt-2">Questions Answered: <strong><span id="finalAnswered">0</span></strong></p>
+                    </div>
+                    <p class="mt-3">Thank you for taking the examination. Your results have been recorded.</p>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="window.location.href='/student'" class="btn btn-primary w-100">Exit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <script src="/js/exam.js"></script>
+</body>
+</html>
