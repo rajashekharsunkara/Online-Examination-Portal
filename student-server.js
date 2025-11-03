@@ -22,7 +22,7 @@ app.post('/api/student/login', (req, res) => {
   
   db.get(`
     SELECT s.*, c.name as center_name, t.name as trade_name, t.id as trade_id,
-           t.duration, t.questions_per_exam, t.marks_per_question
+           t.duration, t.questions_per_set, t.marks_per_question
     FROM students s
     JOIN centers c ON s.center_id = c.id
     JOIN trades t ON s.trade_id = t.id
@@ -51,13 +51,13 @@ app.post('/api/student/login', (req, res) => {
           }
         }
 
-        // Create exam object from trade data
+        // Create exam object from trade data (30 questions per set)
         const exam = {
           id: student.trade_id,
           title: `${student.trade_name} Examination`,
           trade_id: student.trade_id,
           duration: student.duration,
-          total_marks: student.questions_per_exam * student.marks_per_question
+          total_marks: 30 * student.marks_per_question // Always 30 questions
         };
 
         res.json({ 
@@ -87,41 +87,60 @@ app.post('/api/student/start-exam', (req, res) => {
     }
 
     // Get trade settings
-    db.get('SELECT questions_per_exam, marks_per_question FROM trades WHERE id = ?', 
+    db.get('SELECT questions_per_set, marks_per_question FROM trades WHERE id = ?', 
       [student.trade_id], (err, trade) => {
         if (err || !trade) {
           return res.status(500).json({ error: 'Failed to find trade' });
         }
 
-        // Create exam session
-        db.run(
-          'INSERT INTO exam_sessions (student_id, trade_id, start_time, status) VALUES (?, ?, datetime("now"), "active")',
-          [student_id, student.trade_id],
-          function(err) {
-            if (err) {
-              return res.status(500).json({ error: 'Failed to start exam session' });
-            }
-            
-            const sessionId = this.lastID;
-            
-            // Get random questions from question bank
-            db.all(`SELECT id, question_text, option_a, option_b, option_c, option_d 
-                    FROM question_bank 
-                    WHERE trade_id = ? 
-                    ORDER BY RANDOM() 
-                    LIMIT ?`,
-              [student.trade_id, trade.questions_per_exam], (err, questions) => {
+        // Get a random active question set for this trade
+        db.all(`
+          SELECT id FROM question_sets 
+          WHERE trade_id = ? AND is_active = 1
+        `, [student.trade_id], (err, sets) => {
+          if (err) {
+            return res.status(500).json({ error: 'Failed to find question sets' });
+          }
+          
+          if (sets.length === 0) {
+            return res.status(500).json({ 
+              error: 'No question sets available for this trade. Please contact administrator.' 
+            });
+          }
+
+          // Randomly select one set
+          const randomSet = sets[Math.floor(Math.random() * sets.length)];
+          const setId = randomSet.id;
+
+          // Create exam session with assigned set
+          db.run(
+            'INSERT INTO exam_sessions (student_id, trade_id, set_id, start_time, status) VALUES (?, ?, ?, datetime("now"), "active")',
+            [student_id, student.trade_id, setId],
+            function(err) {
+              if (err) {
+                return res.status(500).json({ error: 'Failed to start exam session' });
+              }
+              
+              const sessionId = this.lastID;
+              
+              // Get all 30 questions from the assigned set
+              db.all(`
+                SELECT id, question_text, option_a, option_b, option_c, option_d 
+                FROM question_bank 
+                WHERE set_id = ? 
+                ORDER BY question_number
+              `, [setId], (err, questions) => {
                 if (err) {
                   return res.status(500).json({ error: 'Failed to load questions' });
                 }
                 
-                if (questions.length < trade.questions_per_exam) {
+                if (questions.length !== 30) {
                   return res.status(500).json({ 
-                    error: `Not enough questions in question bank. Need ${trade.questions_per_exam}, found ${questions.length}` 
+                    error: `Invalid question set. Expected 30 questions, found ${questions.length}` 
                   });
                 }
 
-                // Store selected questions in session_questions
+                // Store all questions in session_questions (to track which set was used)
                 let completed = 0;
                 questions.forEach((q, index) => {
                   db.run(
@@ -139,6 +158,7 @@ app.post('/api/student/start-exam', (req, res) => {
                         res.json({ 
                           success: true, 
                           sessionId: sessionId,
+                          setId: setId,
                           questions: questionsWithMarks
                         });
                       }
@@ -146,8 +166,9 @@ app.post('/api/student/start-exam', (req, res) => {
                   );
                 });
               });
-          }
-        );
+            }
+          );
+        });
       });
   });
 });
@@ -220,20 +241,23 @@ app.post('/api/student/proctoring-violation', (req, res) => {
 app.post('/api/student/submit-exam', (req, res) => {
   const { session_id } = req.body;
   
+  console.log('Submitting exam for session:', session_id);
+  
   db.run(
     'UPDATE exam_sessions SET status = "completed", end_time = datetime("now") WHERE id = ?',
     [session_id],
     (err) => {
       if (err) {
+        console.error('Failed to update exam session:', err);
         return res.status(500).json({ error: 'Failed to submit exam' });
       }
 
-      // Calculate score using session_questions and question_bank
+      // Calculate score using answers and question_bank (via question_sets)
       db.get(`
         SELECT 
           COUNT(a.id) as total_answered,
           SUM(CASE WHEN a.selected_answer = qb.correct_answer THEN t.marks_per_question ELSE 0 END) as score,
-          t.questions_per_exam * t.marks_per_question as total_marks
+          t.questions_per_set * t.marks_per_question as total_marks
         FROM exam_sessions es
         JOIN trades t ON es.trade_id = t.id
         LEFT JOIN answers a ON es.id = a.session_id
@@ -241,8 +265,11 @@ app.post('/api/student/submit-exam', (req, res) => {
         WHERE es.id = ?
       `, [session_id], (err, result) => {
         if (err) {
+          console.error('Failed to calculate score:', err);
           return res.status(500).json({ error: 'Failed to calculate score' });
         }
+        
+        console.log('Score calculation result:', result);
         
         // Store result in results table
         const score = result.score || 0;
@@ -255,8 +282,11 @@ app.post('/api/student/submit-exam', (req, res) => {
           (err) => {
             if (err) {
               console.error('Failed to store result:', err);
+              return res.status(500).json({ error: 'Failed to store result' });
             }
 
+            console.log('Exam submitted successfully. Score:', score, 'Total:', totalMarks);
+            
             res.json({ 
               success: true,
               score: score,

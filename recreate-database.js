@@ -27,21 +27,35 @@ db.serialize(() => {
         name TEXT NOT NULL,
         code TEXT UNIQUE NOT NULL,
         duration INTEGER DEFAULT 90,
-        questions_per_exam INTEGER DEFAULT 25,
+        questions_per_set INTEGER DEFAULT 30,
         marks_per_question INTEGER DEFAULT 4
     )`);
 
-    // Question Bank (all questions for a trade)
-    db.run(`CREATE TABLE question_bank (
+    // Question Sets (Multiple sets per trade)
+    db.run(`CREATE TABLE question_sets (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         trade_id INTEGER NOT NULL,
+        set_name TEXT NOT NULL,
+        set_number INTEGER NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        is_active INTEGER DEFAULT 1,
+        FOREIGN KEY (trade_id) REFERENCES trades(id),
+        UNIQUE(trade_id, set_number)
+    )`);
+
+    // Question Bank (30 questions per set)
+    db.run(`CREATE TABLE question_bank (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        set_id INTEGER NOT NULL,
+        question_number INTEGER NOT NULL,
         question_text TEXT NOT NULL,
         option_a TEXT NOT NULL,
         option_b TEXT NOT NULL,
         option_c TEXT NOT NULL,
         option_d TEXT NOT NULL,
         correct_answer TEXT NOT NULL,
-        FOREIGN KEY (trade_id) REFERENCES trades(id)
+        FOREIGN KEY (set_id) REFERENCES question_sets(id) ON DELETE CASCADE,
+        UNIQUE(set_id, question_number)
     )`);
 
     // Students table
@@ -62,20 +76,22 @@ db.serialize(() => {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         student_id INTEGER,
         trade_id INTEGER,
+        set_id INTEGER,
         start_time DATETIME,
         end_time DATETIME,
         status TEXT DEFAULT 'active',
         warnings INTEGER DEFAULT 0,
         FOREIGN KEY (student_id) REFERENCES students(id),
-        FOREIGN KEY (trade_id) REFERENCES trades(id)
+        FOREIGN KEY (trade_id) REFERENCES trades(id),
+        FOREIGN KEY (set_id) REFERENCES question_sets(id)
     )`);
 
-    // Session questions (randomized for each student)
+    // Session questions (all 30 questions from assigned set)
     db.run(`CREATE TABLE session_questions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         session_id INTEGER,
         question_id INTEGER,
-        question_number INTEGER,
+        question_order INTEGER,
         FOREIGN KEY (session_id) REFERENCES exam_sessions(id),
         FOREIGN KEY (question_id) REFERENCES question_bank(id)
     )`);
@@ -85,27 +101,20 @@ db.serialize(() => {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         session_id INTEGER,
         question_id INTEGER,
-        answer TEXT,
+        selected_answer TEXT,
         FOREIGN KEY (session_id) REFERENCES exam_sessions(id),
-        FOREIGN KEY (question_id) REFERENCES question_bank(id)
+        FOREIGN KEY (question_id) REFERENCES question_bank(id),
+        UNIQUE(session_id, question_id)
     )`);
 
     // Results
     db.run(`CREATE TABLE results (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         session_id INTEGER UNIQUE,
-        student_id INTEGER,
-        trade_id INTEGER,
         score INTEGER,
         total_marks INTEGER,
-        answered INTEGER,
-        correct INTEGER,
-        wrong INTEGER,
-        unanswered INTEGER,
-        submitted_at DATETIME,
-        FOREIGN KEY (session_id) REFERENCES exam_sessions(id),
-        FOREIGN KEY (student_id) REFERENCES students(id),
-        FOREIGN KEY (trade_id) REFERENCES trades(id)
+        percentage REAL,
+        FOREIGN KEY (session_id) REFERENCES exam_sessions(id)
     )`);
 
     // Proctoring logs
@@ -140,16 +149,16 @@ db.serialize(() => {
     centerStmt.finalize();
     console.log(`✓ Inserted ${centers.length} centers\n`);
 
-    // Insert 5 trades with exam settings
+    // Insert 5 trades with exam settings (30 questions per set)
     const trades = [
-        ['Electrician', 'ELEC', 90, 25, 4],
-        ['Fitter', 'FITT', 90, 25, 4],
-        ['Welder', 'WELD', 90, 25, 4],
+        ['Electrician', 'ELEC', 90, 30, 4],
+        ['Fitter', 'FITT', 90, 30, 4],
+        ['Welder', 'WELD', 90, 30, 4],
         ['Computer Operator', 'COMP', 120, 30, 4],
-        ['Plumber', 'PLMB', 90, 25, 4]
+        ['Plumber', 'PLMB', 90, 30, 4]
     ];
 
-    const tradeStmt = db.prepare('INSERT INTO trades (name, code, duration, questions_per_exam, marks_per_question) VALUES (?, ?, ?, ?, ?)');
+    const tradeStmt = db.prepare('INSERT INTO trades (name, code, duration, questions_per_set, marks_per_question) VALUES (?, ?, ?, ?, ?)');
     trades.forEach(t => tradeStmt.run(t));
     tradeStmt.finalize();
     console.log(`✓ Inserted ${trades.length} trades\n`);

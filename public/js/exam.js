@@ -140,32 +140,40 @@ function showQuestion(index) {
     const options = ['A', 'B', 'C', 'D'];
     options.forEach(opt => {
         const optionDiv = document.createElement('div');
-        optionDiv.className = 'option';
+        optionDiv.className = 'option-item';
         
+        // Create option label (A, B, C, D circle)
+        const optionLabel = document.createElement('div');
+        optionLabel.className = 'option-label';
+        optionLabel.textContent = opt;
+        
+        // Create option text
+        const optionText = document.createElement('div');
+        optionText.className = 'option-text';
+        optionText.textContent = question['option_' + opt.toLowerCase()];
+        
+        // Hidden radio input
         const radio = document.createElement('input');
         radio.type = 'radio';
         radio.name = 'answer';
         radio.value = opt;
         radio.id = 'option' + opt;
+        radio.style.display = 'none';
         
         if (answers[question.id] === opt) {
             radio.checked = true;
             optionDiv.classList.add('selected');
         }
         
-        const label = document.createElement('label');
-        label.htmlFor = 'option' + opt;
-        label.textContent = `${opt}. ${question['option_' + opt.toLowerCase()]}`;
-        
-        radio.addEventListener('change', () => saveAnswer(question.id, opt));
-        
-        optionDiv.appendChild(radio);
-        optionDiv.appendChild(label);
+        // Click handler
         optionDiv.addEventListener('click', () => {
             radio.checked = true;
-            radio.dispatchEvent(new Event('change'));
+            saveAnswer(question.id, opt);
         });
         
+        optionDiv.appendChild(optionLabel);
+        optionDiv.appendChild(optionText);
+        optionDiv.appendChild(radio);
         optionsContainer.appendChild(optionDiv);
     });
     
@@ -179,9 +187,9 @@ function showQuestion(index) {
 async function saveAnswer(questionId, answer) {
     answers[questionId] = answer;
     
-    // Update UI
-    document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-    event.target.closest('.option').classList.add('selected');
+    // Update UI - remove selected from all options, add to clicked one
+    document.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected'));
+    event.target.closest('.option-item').classList.add('selected');
     
     // Save to server
     try {
@@ -400,21 +408,41 @@ function showViolationWarning(violationType, warningCount) {
 }
 
 document.getElementById('acknowledgeBtn').addEventListener('click', () => {
-    const modal = bootstrap.Modal.getInstance(document.getElementById('violationModal'));
-    if (modal) modal.hide();
+    const modalElement = document.getElementById('violationModal');
+    const modal = bootstrap.Modal.getInstance(modalElement);
     
-    // Re-enter fullscreen and force focus
+    if (modal) {
+        modal.hide();
+    }
+    
+    // Remove any leftover backdrops
     setTimeout(() => {
+        const backdrops = document.querySelectorAll('.modal-backdrop');
+        backdrops.forEach(backdrop => backdrop.remove());
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+        
+        // Re-enter fullscreen and refocus
         enterFullscreen();
         window.focus();
-        document.body.focus();
         
-        // Focus on the current question area
+        // Focus on the exam container
         const examContainer = document.querySelector('.exam-container');
         if (examContainer) {
             examContainer.focus();
         }
     }, 100);
+});
+
+// Also clean up when modal is hidden
+document.getElementById('violationModal').addEventListener('hidden.bs.modal', function () {
+    // Ensure all backdrops are removed
+    const backdrops = document.querySelectorAll('.modal-backdrop');
+    backdrops.forEach(backdrop => backdrop.remove());
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
 });
 
 function handleKicked() {
@@ -462,6 +490,8 @@ async function submitExam() {
     isExamActive = false;
     clearInterval(examTimer);
     
+    console.log('Submitting exam with session_id:', sessionId);
+    
     try {
         const response = await fetch('/api/student/submit-exam', {
             method: 'POST',
@@ -469,17 +499,32 @@ async function submitExam() {
             body: JSON.stringify({ session_id: sessionId })
         });
         
+        console.log('Submit response status:', response.status);
+        
         const data = await response.json();
+        console.log('Submit response data:', data);
         
         if (response.ok) {
-            document.getElementById('finalScore').textContent = data.score;
-            document.getElementById('totalMarks').textContent = data.total_marks;
-            document.getElementById('finalAnswered').textContent = data.answered;
-            const modal = new bootstrap.Modal(document.getElementById('resultModal'));
-            modal.show();
+            // Don't show scores to students - just show submission confirmation
+            const modalElement = document.getElementById('resultModal');
+            console.log('Modal element:', modalElement);
+            
+            if (modalElement) {
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+                console.log('Modal shown successfully');
+            } else {
+                console.error('Modal element not found!');
+                alert('Exam submitted successfully! You will be redirected to the login page.');
+                window.location.href = '/student';
+            }
+        } else {
+            console.error('Submit failed:', data);
+            alert('Failed to submit exam: ' + (data.error || 'Unknown error'));
         }
     } catch (error) {
-        alert('Failed to submit exam. Please try again.');
+        console.error('Submit error:', error);
+        alert('Failed to submit exam. Error: ' + error.message);
     }
 }
 

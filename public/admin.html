@@ -7,21 +7,32 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/css/admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
     <!-- Login Section -->
-    <div id="loginSection" class="min-vh-100 d-flex align-items-center justify-content-center">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-5">
-                    <div class="card shadow-sm mb-3">
-                        <div class="card-body text-center py-4">
+    <div id="loginSection" class="min-vh-100">
+        <div class="container py-5">
+            <!-- Header with Logos -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body py-4">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <img src="/images/logo.png" alt="India Skills Logo" style="height: 70px; object-fit: contain;">
+                        <div class="text-center flex-grow-1 mx-3">
                             <h1 class="h3 fw-bold text-primary mb-2">Admin Dashboard</h1>
                             <a href="/" class="text-decoration-none"><i class="bi bi-arrow-left me-1"></i>Back to Home</a>
                         </div>
+                        <div class="d-flex gap-3 align-items-center">
+                            <img src="/images/Skill_India.png" alt="Skill India" style="height: 60px; object-fit: contain;">
+                            <img src="/images/APSSDC_logo.png" alt="APSSDC" style="height: 60px; object-fit: contain;">
+                        </div>
                     </div>
+                </div>
+            </div>
 
-                    <div class="card shadow-lg border-0">
+            <!-- Login Card -->
+            <div class="login-container">
+                <div class="card shadow-lg border-0">
                         <div class="card-body p-5">
                             <div class="text-center mb-4">
                                 <i class="bi bi-shield-lock text-primary" style="font-size: 3rem;"></i>
@@ -51,11 +62,16 @@
 
     <!-- Dashboard Section -->
     <div id="dashboardSection" style="display: none;">
-        <!-- Header -->
+        <!-- Header with Logos -->
         <nav class="navbar navbar-dark bg-primary shadow-sm">
             <div class="container-fluid px-4">
-                <span class="navbar-brand mb-0 h1"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</span>
                 <div class="d-flex align-items-center gap-3">
+                    <img src="/images/logo.png" alt="India Skills" style="height: 45px; object-fit: contain; filter: brightness(0) invert(1);">
+                    <span class="navbar-brand mb-0 h1"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</span>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <img src="/images/Skill_India-removebg-preview.png" alt="Skill India" style="height: 40px; object-fit: contain;">
+                    <img src="/images/APSSDC_logo-removebg-preview.png" alt="APSSDC" style="height: 40px; object-fit: contain;">
                     <span class="text-white"><i class="bi bi-person-circle me-2"></i><span id="adminUsername"></span></span>
                     <button onclick="logout()" class="btn btn-outline-light btn-sm">
                         <i class="bi bi-box-arrow-right me-1"></i>Logout
@@ -83,6 +99,9 @@
             </li>
             <li class="nav-item">
                 <button class="nav-link" onclick="showTab('results')"><i class="bi bi-bar-chart me-2"></i>Results</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" onclick="showTab('analytics')"><i class="bi bi-graph-up me-2"></i>Analytics</button>
             </li>
             <li class="nav-item">
                 <button class="nav-link" onclick="showTab('proctoring')"><i class="bi bi-camera-video me-2"></i>Proctoring</button>
@@ -217,12 +236,51 @@
                                         <th>Center</th>
                                         <th>District</th>
                                         <th>Exam Status</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="studentsTable">
-                                    <tr><td colspan="7" class="text-center py-4">Loading...</td></tr>
+                                    <tr><td colspan="8" class="text-center py-4">Loading...</td></tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Profile/Report Modal -->
+        <div id="studentProfileModal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title"><i class="bi bi-person-badge me-2"></i>Student Profile & Report</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" id="studentProfileContent">
+                        <!-- Content will be loaded dynamically -->
+                    </div>
+                    <div class="modal-footer no-print">
+                        <button type="button" class="btn btn-primary" onclick="printStudentReport()">
+                            <i class="bi bi-printer me-2"></i>Print Report
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fullscreen Chart Modal -->
+        <div id="fullscreenChartModal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark text-white">
+                        <h5 class="modal-title" id="fullscreenChartTitle">Chart</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body d-flex align-items-center justify-content-center" style="background: #f8f9fa;">
+                        <div style="width: 90%; height: 85vh;">
+                            <canvas id="fullscreenChartCanvas"></canvas>
                         </div>
                     </div>
                 </div>
@@ -271,47 +329,100 @@
         <!-- Questions Tab -->
         <div id="questionsTab" class="tab-content">
             <div class="container-fluid p-4">
-                <h2 class="mb-4">Upload Questions to Question Bank</h2>
+                <h2 class="mb-4"><i class="bi bi-question-circle me-2"></i>Manage Question Sets</h2>
                 
-                <div class="alert alert-info">
-                    <i class="bi bi-info-circle me-2"></i>
-                    <strong>How it works:</strong> Upload questions to a trade's question bank. When students take exams, they get random questions from their trade's bank.
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    <strong>Important:</strong> Each question set must contain <strong>exactly 30 questions</strong>. 
+                    Students will receive one complete set (all 30 questions) randomly selected from available sets for their trade.
                 </div>
 
                 <!-- Select Trade -->
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
-                        <label for="questionTrade" class="form-label fw-bold">Select Trade</label>
-                        <select class="form-select form-select-lg" id="questionTrade" required>
-                            <option value="">Select Trade to Upload Questions</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- JSON File Upload -->
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0"><i class="bi bi-upload me-2"></i>Option 1: Upload JSON File</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label for="jsonFile" class="form-label">Choose JSON File</label>
-                            <input type="file" class="form-control" id="jsonFile" accept=".json">
+                        <div class="row align-items-end">
+                            <div class="col-md-8">
+                                <label for="questionTrade" class="form-label fw-bold">Select Trade</label>
+                                <select class="form-select form-select-lg" id="questionTrade" onchange="loadQuestionSets()">
+                                    <option value="">Select Trade to Manage Question Sets</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <button class="btn btn-primary btn-lg" onclick="showUploadModal()" id="uploadSetBtn" disabled>
+                                    <i class="bi bi-plus-circle me-2"></i>Upload New Set (30 Questions)
+                                </button>
+                            </div>
                         </div>
-                        <button type="button" onclick="uploadJsonFile()" class="btn btn-success">
-                            <i class="bi bi-cloud-upload me-2"></i>Upload JSON File
-                        </button>
                     </div>
                 </div>
 
-                <!-- JSON Paste Upload -->
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-info text-white">
-                        <h5 class="mb-0"><i class="bi bi-code-square me-2"></i>Option 2: Paste JSON Content</h5>
+                <!-- Existing Question Sets -->
+                <div class="card shadow-sm" id="setsContainer" style="display: none;">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-collection me-2"></i>Question Sets for <span id="selectedTradeName"></span></h5>
                     </div>
                     <div class="card-body">
-                        <p class="text-muted">Paste questions in JSON format. Example:</p>
-                        <div class="code-example mb-3">[
+                        <div id="questionSetsList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Question Set Modal -->
+        <div class="modal fade" id="uploadSetModal" tabindex="-1">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title"><i class="bi bi-upload me-2"></i>Upload New Question Set (30 Questions)</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-info">
+                            <strong>Requirement:</strong> Your JSON file must contain exactly 30 questions with the following format for each question:
+                            <ul class="mb-0 mt-2">
+                                <li><code>question_text</code> - The question (required)</li>
+                                <li><code>option_a</code>, <code>option_b</code>, <code>option_c</code>, <code>option_d</code> - Four options (required)</li>
+                                <li><code>correct_answer</code> - Must be "A", "B", "C", or "D" (required)</li>
+                            </ul>
+                        </div>
+
+                        <!-- Set Name -->
+                        <div class="mb-3">
+                            <label for="setName" class="form-label fw-bold">Set Name (Optional)</label>
+                            <input type="text" class="form-control" id="setName" placeholder="e.g., Set 1 - January 2025">
+                            <small class="text-muted">Leave blank to auto-generate (Set 1, Set 2, etc.)</small>
+                        </div>
+
+                        <!-- Upload Methods -->
+                        <ul class="nav nav-tabs mb-3" role="tablist">
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#jsonFileTab">
+                                    <i class="bi bi-file-earmark-arrow-up me-2"></i>Upload JSON File
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#jsonPasteTab">
+                                    <i class="bi bi-code-square me-2"></i>Paste JSON
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <!-- JSON File Upload -->
+                            <div class="tab-pane fade show active" id="jsonFileTab">
+                                <div class="mb-3">
+                                    <label for="jsonFile" class="form-label">Choose JSON File (30 questions)</label>
+                                    <input type="file" class="form-control" id="jsonFile" accept=".json">
+                                </div>
+                                <button type="button" onclick="uploadJsonFileToSet()" class="btn btn-success">
+                                    <i class="bi bi-cloud-upload me-2"></i>Load from File
+                                </button>
+                            </div>
+
+                            <!-- JSON Paste -->
+                            <div class="tab-pane fade" id="jsonPasteTab">
+                                <p class="text-muted">Paste your JSON array with exactly 30 questions:</p>
+                                <div class="code-example mb-3" style="font-size: 0.75rem;">[
   {
     "question_text": "What is 2+2?",
     "option_a": "3",
@@ -319,27 +430,20 @@
     "option_c": "5",
     "option_d": "6",
     "correct_answer": "B"
-  }
+  },
+  ...29 more questions
 ]</div>
-                        <form>
-                            <div class="mb-3">
-                                <textarea class="form-control" id="questionsJson" rows="10" placeholder="Paste JSON here" style="font-family: monospace;"></textarea>
+                                <textarea class="form-control" id="questionsJson" rows="12" placeholder="Paste JSON array here" style="font-family: monospace; font-size: 0.85rem;"></textarea>
                             </div>
-                            <button type="button" onclick="uploadQuestions()" class="btn btn-info text-white">
-                                <i class="bi bi-check-circle me-2"></i>Upload Questions
-                            </button>
-                        </form>
-                        <div id="uploadResult" class="mt-3"></div>
-                    </div>
-                </div>
+                        </div>
 
-                <!-- Existing Questions -->
-                <div class="card shadow-sm">
-                    <div class="card-header">
-                        <h5 class="mb-0">Existing Questions</h5>
+                        <div id="uploadValidation" class="mt-3"></div>
                     </div>
-                    <div class="card-body">
-                        <div id="questionsList"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" onclick="uploadQuestionSet()" class="btn btn-primary" id="uploadSetSubmitBtn">
+                            <i class="bi bi-check-circle me-2"></i>Upload Question Set
+                        </button>
                     </div>
                 </div>
             </div>
@@ -349,6 +453,165 @@
         <div id="resultsTab" class="tab-content">
             <div class="container-fluid p-4">
                 <h2 class="mb-4">Examination Results</h2>
+                
+                <!-- Analytics Charts for Results - Separate Carousels -->
+                <h5 class="mb-4"><i class="bi bi-graph-up me-2"></i>Performance Analytics</h5>
+                
+                <!-- District Performance Carousel -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0"><i class="bi bi-geo-alt me-2"></i>District Performance</h6>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-primary" onclick="previousDistrictChart()">
+                                <i class="bi bi-chevron-left"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-primary" id="districtChartIndicator" disabled>Pie / Bar</button>
+                            <button class="btn btn-sm btn-outline-primary" onclick="nextDistrictChart()">
+                                <i class="bi bi-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="position-relative">
+                        <div id="districtChartCarousel" style="overflow: hidden;">
+                            <div id="districtChartSlider" style="display: flex; transition: transform 0.3s ease;">
+                                <!-- District Pie Chart -->
+                                <div class="chart-slide" style="min-width: 100%; flex-shrink: 0;">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-0"><i class="bi bi-pie-chart me-2"></i>District - Pie Chart</h6>
+                                            <button class="btn btn-sm btn-light" onclick="openFullscreen('resultsDistrictPie', 'District Performance - Pie Chart')">
+                                                <i class="bi bi-arrows-fullscreen"></i>
+                                            </button>
+                                        </div>
+                                        <div class="card-body" style="height: 400px;">
+                                            <canvas id="resultsDistrictPie"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- District Bar Chart -->
+                                <div class="chart-slide" style="min-width: 100%; flex-shrink: 0;">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-0"><i class="bi bi-bar-chart me-2"></i>District - Bar Chart</h6>
+                                            <button class="btn btn-sm btn-light" onclick="openFullscreen('resultsDistrictBar', 'District Performance - Bar Chart')">
+                                                <i class="bi bi-arrows-fullscreen"></i>
+                                            </button>
+                                        </div>
+                                        <div class="card-body" style="height: 400px;">
+                                            <canvas id="resultsDistrictBar"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Center Performance Carousel -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0"><i class="bi bi-building me-2"></i>Center Performance</h6>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-success" onclick="previousCenterChart()">
+                                <i class="bi bi-chevron-left"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-success" id="centerChartIndicator" disabled>Pie / Bar</button>
+                            <button class="btn btn-sm btn-outline-success" onclick="nextCenterChart()">
+                                <i class="bi bi-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="position-relative">
+                        <div id="centerChartCarousel" style="overflow: hidden;">
+                            <div id="centerChartSlider" style="display: flex; transition: transform 0.3s ease;">
+                                <!-- Center Pie Chart -->
+                                <div class="chart-slide" style="min-width: 100%; flex-shrink: 0;">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-0"><i class="bi bi-pie-chart me-2"></i>Center - Pie Chart</h6>
+                                            <button class="btn btn-sm btn-light" onclick="openFullscreen('resultsCenterPie', 'Center Performance - Pie Chart')">
+                                                <i class="bi bi-arrows-fullscreen"></i>
+                                            </button>
+                                        </div>
+                                        <div class="card-body" style="height: 400px;">
+                                            <canvas id="resultsCenterPie"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Center Bar Chart -->
+                                <div class="chart-slide" style="min-width: 100%; flex-shrink: 0;">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-0"><i class="bi bi-bar-chart me-2"></i>Center - Bar Chart</h6>
+                                            <button class="btn btn-sm btn-light" onclick="openFullscreen('resultsCenterBar', 'Center Performance - Bar Chart')">
+                                                <i class="bi bi-arrows-fullscreen"></i>
+                                            </button>
+                                        </div>
+                                        <div class="card-body" style="height: 400px;">
+                                            <canvas id="resultsCenterBar"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Trade Performance Carousel -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0"><i class="bi bi-tools me-2"></i>Trade Performance</h6>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-info" onclick="previousTradeChart()">
+                                <i class="bi bi-chevron-left"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-info" id="tradeChartIndicator" disabled>Pie / Bar</button>
+                            <button class="btn btn-sm btn-outline-info" onclick="nextTradeChart()">
+                                <i class="bi bi-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="position-relative">
+                        <div id="tradeChartCarousel" style="overflow: hidden;">
+                            <div id="tradeChartSlider" style="display: flex; transition: transform 0.3s ease;">
+                                <!-- Trade Pie Chart -->
+                                <div class="chart-slide" style="min-width: 100%; flex-shrink: 0;">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-0"><i class="bi bi-pie-chart me-2"></i>Trade - Pie Chart</h6>
+                                            <button class="btn btn-sm btn-light" onclick="openFullscreen('resultsTradePie', 'Trade Performance - Pie Chart')">
+                                                <i class="bi bi-arrows-fullscreen"></i>
+                                            </button>
+                                        </div>
+                                        <div class="card-body" style="height: 400px;">
+                                            <canvas id="resultsTradePie"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Trade Bar Chart -->
+                                <div class="chart-slide" style="min-width: 100%; flex-shrink: 0;">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-0"><i class="bi bi-bar-chart me-2"></i>Trade - Bar Chart</h6>
+                                            <button class="btn btn-sm btn-light" onclick="openFullscreen('resultsTradeBar', 'Trade Performance - Bar Chart')">
+                                                <i class="bi bi-arrows-fullscreen"></i>
+                                            </button>
+                                        </div>
+                                        <div class="card-body" style="height: 400px;">
+                                            <canvas id="resultsTradeBar"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
                 <!-- Filters -->
                 <div class="card shadow-sm mb-4">
@@ -414,18 +677,124 @@
                                         <th>District</th>
                                         <th>Center</th>
                                         <th>Trade</th>
-                                                        <th>Exam</th>
+                                        <th>Exam</th>
                                         <th class="score-column">Score</th>
                                         <th>Answered</th>
                                         <th>Warnings</th>
                                         <th>Status</th>
                                         <th>Started</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="resultsTable">
-                                    <tr><td colspan="11" class="text-center py-4">Loading...</td></tr>
+                                    <tr><td colspan="12" class="text-center py-4">Loading...</td></tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analyticsTab" class="tab-content">
+            <div class="container-fluid p-4">
+                <h2 class="mb-4"><i class="bi bi-graph-up me-2"></i>Analytics & Visualizations</h2>
+                
+                <!-- Charts Row 1 -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="bi bi-pie-chart me-2"></i>Results Distribution</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="resultsDistributionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0"><i class="bi bi-bar-chart me-2"></i>Trade-wise Performance</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="tradePerformanceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row 2 -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="mb-0"><i class="bi bi-geo-alt me-2"></i>District-wise Participation</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="districtParticipationChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-warning text-dark">
+                                <h5 class="mb-0"><i class="bi bi-exclamation-triangle me-2"></i>Proctoring Violations</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="violationsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row 3 -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-12">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-dark text-white">
+                                <h5 class="mb-0"><i class="bi bi-graph-up-arrow me-2"></i>Exam Completion Timeline</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="completionTimelineChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="card shadow-sm border-success">
+                            <div class="card-body text-center">
+                                <h3 class="text-success" id="avgScore">--</h3>
+                                <p class="mb-0">Average Score</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card shadow-sm border-primary">
+                            <div class="card-body text-center">
+                                <h3 class="text-primary" id="passRate">--</h3>
+                                <p class="mb-0">Pass Rate (≥40%)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card shadow-sm border-warning">
+                            <div class="card-body text-center">
+                                <h3 class="text-warning" id="totalViolations">--</h3>
+                                <p class="mb-0">Total Violations</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card shadow-sm border-danger">
+                            <div class="card-body text-center">
+                                <h3 class="text-danger" id="kickedStudents">--</h3>
+                                <p class="mb-0">Disqualified Students</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -460,7 +829,9 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
     <script src="/js/admin.js"></script>
 </body>
 </html>
+

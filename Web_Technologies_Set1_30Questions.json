@@ -1,0 +1,242 @@
+[
+  {
+    "question_text": "What does HTML stand for?",
+    "option_a": "Hyperlinks and Text Markup Language",
+    "option_b": "HyperText Markup Language",
+    "option_c": "Home Tool Markup Language",
+    "option_d": "Hyperlinks Text Making Language",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which HTML tag is used to define an internal style sheet?",
+    "option_a": "<script>",
+    "option_b": "<css>",
+    "option_c": "<style>",
+    "option_d": "<link>",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "Which property is used to change the background color in CSS?",
+    "option_a": "color",
+    "option_b": "bgcolor",
+    "option_c": "background-color",
+    "option_d": "bg-color",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What does CSS stand for?",
+    "option_a": "Cascading Style Sheets",
+    "option_b": "Creative Style Sheets",
+    "option_c": "Computer Style Sheets",
+    "option_d": "Colorful Style Sheets",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which JavaScript method is used to access an HTML element by id?",
+    "option_a": "getElementById()",
+    "option_b": "getElement()",
+    "option_c": "getElementByClassName()",
+    "option_d": "querySelector()",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "What is the correct HTML element for the largest heading?",
+    "option_a": "<heading>",
+    "option_b": "<h6>",
+    "option_c": "<h1>",
+    "option_d": "<head>",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "Which HTTP method is used to send data to a server?",
+    "option_a": "GET",
+    "option_b": "POST",
+    "option_c": "PUT",
+    "option_d": "UPDATE",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is Bootstrap?",
+    "option_a": "A JavaScript library",
+    "option_b": "A CSS framework",
+    "option_c": "A backend framework",
+    "option_d": "A database",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which tag is used to create a hyperlink in HTML?",
+    "option_a": "<link>",
+    "option_b": "<a>",
+    "option_c": "<href>",
+    "option_d": "<hyperlink>",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What does DOM stand for?",
+    "option_a": "Document Object Model",
+    "option_b": "Data Object Management",
+    "option_c": "Digital Optical Media",
+    "option_d": "Document Orientation Mode",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which CSS property controls text size?",
+    "option_a": "text-size",
+    "option_b": "font-style",
+    "option_c": "font-size",
+    "option_d": "text-style",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What is the correct way to write a JavaScript array?",
+    "option_a": "var colors = (1:'red', 2:'green', 3:'blue')",
+    "option_b": "var colors = 'red', 'green', 'blue'",
+    "option_c": "var colors = ['red', 'green', 'blue']",
+    "option_d": "var colors = 1 = ('red'), 2 = ('green'), 3 = ('blue')",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "Which HTML attribute specifies an alternate text for an image?",
+    "option_a": "title",
+    "option_b": "alt",
+    "option_c": "src",
+    "option_d": "longdesc",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is the default port for HTTP?",
+    "option_a": "443",
+    "option_b": "8080",
+    "option_c": "80",
+    "option_d": "3000",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "Which method is used to remove the last element from an array in JavaScript?",
+    "option_a": "pop()",
+    "option_b": "push()",
+    "option_c": "shift()",
+    "option_d": "remove()",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "What does API stand for?",
+    "option_a": "Application Programming Interface",
+    "option_b": "Advanced Programming Integration",
+    "option_c": "Automated Program Interface",
+    "option_d": "Application Process Integration",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which CSS framework is known for utility-first approach?",
+    "option_a": "Bootstrap",
+    "option_b": "Foundation",
+    "option_c": "Tailwind CSS",
+    "option_d": "Bulma",
+    "correct_answer": "C"
+  },
+  {
+    "question_text": "What is React?",
+    "option_a": "A database",
+    "option_b": "A JavaScript library for building UIs",
+    "option_c": "A CSS framework",
+    "option_d": "A backend framework",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which symbol is used for comments in CSS?",
+    "option_a": "//",
+    "option_b": "/* */",
+    "option_c": "#",
+    "option_d": "<!--  -->",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What does AJAX stand for?",
+    "option_a": "Asynchronous JavaScript and XML",
+    "option_b": "Advanced Java and XML",
+    "option_c": "Asynchronous Java and XHTML",
+    "option_d": "All JavaScript and XML",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which HTML5 element is used for navigation links?",
+    "option_a": "<navigation>",
+    "option_b": "<nav>",
+    "option_c": "<navigate>",
+    "option_d": "<menu>",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is the purpose of the <meta> tag?",
+    "option_a": "To define metadata about an HTML document",
+    "option_b": "To create a table",
+    "option_c": "To add styles",
+    "option_d": "To insert images",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which property is used to make text bold in CSS?",
+    "option_a": "text-weight",
+    "option_b": "font-weight",
+    "option_c": "text-style",
+    "option_d": "font-style",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is Node.js?",
+    "option_a": "A JavaScript runtime",
+    "option_b": "A database",
+    "option_c": "A CSS framework",
+    "option_d": "A web browser",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "Which method converts JSON to a JavaScript object?",
+    "option_a": "JSON.parse()",
+    "option_b": "JSON.stringify()",
+    "option_c": "JSON.convert()",
+    "option_d": "JSON.objectify()",
+    "correct_answer": "A"
+  },
+  {
+    "question_text": "What does responsive web design mean?",
+    "option_a": "Fast loading websites",
+    "option_b": "Websites that adapt to different screen sizes",
+    "option_c": "Websites with animations",
+    "option_d": "Websites with videos",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which CSS property is used to create space between elements?",
+    "option_a": "padding",
+    "option_b": "margin",
+    "option_c": "spacing",
+    "option_d": "gap",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is localhost?",
+    "option_a": "A remote server",
+    "option_b": "Your own computer",
+    "option_c": "A cloud service",
+    "option_d": "A database",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "Which HTML element is used for creating an ordered list?",
+    "option_a": "<ul>",
+    "option_b": "<ol>",
+    "option_c": "<list>",
+    "option_d": "<dl>",
+    "correct_answer": "B"
+  },
+  {
+    "question_text": "What is the purpose of Git?",
+    "option_a": "Code editor",
+    "option_b": "Version control system",
+    "option_c": "Database management",
+    "option_d": "Web server",
+    "correct_answer": "B"
+  }
+]
