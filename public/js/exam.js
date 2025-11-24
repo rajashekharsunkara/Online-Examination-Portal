@@ -26,13 +26,20 @@ let isExamActive = true;
 
 // Initialize exam
 async function initExam() {
+    // Show loading animation first
+    showInitialLoadingAnimation();
+    
+    // Make body visible (prevent flash)
+    document.body.classList.add('loaded');
+    
     // Get data from sessionStorage
     studentData = JSON.parse(sessionStorage.getItem('studentData'));
     examData = JSON.parse(sessionStorage.getItem('examData'));
     
     if (!studentData || !examData) {
         alert('Session expired. Please login again.');
-        window.location.href = '/student';
+        sessionStorage.clear();
+        window.location.href = '/';
         return;
     }
     
@@ -60,24 +67,101 @@ async function initExam() {
             // Initialize exam
             remainingSeconds = examData.duration * 60;
             
+            // Hide exam content initially to prevent flash
+            document.getElementById('examContainer').style.opacity = '0';
+            
             // Setup proctoring first
             setupProctoring();
+            
+            // Prepare exam content (but don't show yet)
+            renderQuestionPalette();
+            showQuestion(0);
+            
+            // Wait for loading animation (minimum 1 second)
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Remove loading animation
+            const loadingOverlay = document.getElementById('initialLoadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    if (loadingOverlay.parentNode) {
+                        loadingOverlay.parentNode.removeChild(loadingOverlay);
+                    }
+                }, 300);
+            }
             
             // Request fullscreen immediately with user interaction
             requestFullscreenStart();
             
-            // Start exam after fullscreen
+            // Start timer (it will be ready when fullscreen is entered)
             startTimer();
-            renderQuestionPalette();
-            showQuestion(0);
         } else {
             alert('Failed to start exam: ' + data.error);
-            window.location.href = '/student';
+            sessionStorage.clear();
+            window.location.href = '/';
         }
     } catch (error) {
         alert('Network error. Please check your connection.');
-        window.location.href = '/student';
+        sessionStorage.clear();
+        window.location.href = '/';
     }
+}
+
+function showInitialLoadingAnimation() {
+    const loadingOverlay = document.createElement('div');
+    loadingOverlay.id = 'initialLoadingOverlay';
+    loadingOverlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        z-index: 999999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        transition: opacity 0.3s ease-out;
+    `;
+    
+    loadingOverlay.innerHTML = `
+        <div style="text-align: center; color: white;">
+            <div style="margin-bottom: 30px;">
+                <div class="spinner-border" style="width: 4rem; height: 4rem; border-width: 0.4rem; color: white;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <h2 style="font-weight: 600; letter-spacing: 1px; margin-bottom: 15px;">Loading Your Examination</h2>
+            <p style="font-size: 18px; opacity: 0.9; margin-bottom: 30px;">Setting up secure exam environment...</p>
+            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px;">
+                <div style="animation: pulse 1.5s ease-in-out infinite; animation-delay: 0s;">
+                    <i class="bi bi-shield-check" style="font-size: 2rem;"></i>
+                </div>
+                <div style="animation: pulse 1.5s ease-in-out infinite; animation-delay: 0.3s;">
+                    <i class="bi bi-camera-video" style="font-size: 2rem;"></i>
+                </div>
+                <div style="animation: pulse 1.5s ease-in-out infinite; animation-delay: 0.6s;">
+                    <i class="bi bi-file-text" style="font-size: 2rem;"></i>
+                </div>
+            </div>
+        </div>
+        <style>
+            @keyframes pulse {
+                0%, 100% {
+                    opacity: 0.3;
+                    transform: scale(1);
+                }
+                50% {
+                    opacity: 1;
+                    transform: scale(1.15);
+                }
+            }
+        </style>
+    `;
+    
+    document.body.appendChild(loadingOverlay);
 }
 
 function startTimer() {
@@ -212,41 +296,89 @@ async function saveAnswer(questionId, answer) {
 function requestFullscreenStart() {
     const elem = document.documentElement;
     
-    // Show info message
+    // Create a full overlay that blocks all content
+    const fullOverlay = document.createElement('div');
+    fullOverlay.id = 'fullscreenOverlay';
+    fullOverlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: all;
+    `;
+    
+    // Create the message box
     const startMessage = document.createElement('div');
     startMessage.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
         background: white;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        z-index: 10000;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         text-align: center;
         max-width: 500px;
+        animation: fadeInScale 0.3s ease-out;
     `;
     startMessage.innerHTML = `
-        <h3 style="margin-top: 0; color: #0d6efd;">Exam Starting</h3>
-        <p>The exam will start in fullscreen mode for proctoring purposes.</p>
-        <p><strong>Click the button below to enter fullscreen and begin.</strong></p>
+        <div style="font-size: 60px; color: #0d6efd; margin-bottom: 20px;">🖥️</div>
+        <h3 style="margin: 0 0 20px 0; color: #0d6efd; font-size: 24px;">Exam Starting</h3>
+        <p style="color: #666; margin-bottom: 15px; line-height: 1.6;">
+            The exam will start in fullscreen mode for proctoring purposes.
+        </p>
+        <p style="color: #333; font-weight: 600; margin-bottom: 25px;">
+            Click the button below to enter fullscreen and begin your examination.
+        </p>
         <button id="startFullscreenBtn" style="
             background: #0d6efd;
             color: white;
             border: none;
-            padding: 12px 30px;
-            font-size: 16px;
-            border-radius: 4px;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
-            margin-top: 15px;
-        ">Start Exam in Fullscreen</button>
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+        " onmouseover="this.style.background='#0b5ed7'; this.style.transform='scale(1.05)'"
+           onmouseout="this.style.background='#0d6efd'; this.style.transform='scale(1)'">
+            <span style="font-size: 20px; margin-right: 8px;">⛶</span>
+            Start Exam in Fullscreen
+        </button>
+        <p style="color: #999; font-size: 12px; margin-top: 20px; margin-bottom: 0;">
+            Press ESC to exit fullscreen (will trigger a violation warning)
+        </p>
     `;
     
-    document.body.appendChild(startMessage);
+    // Add animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    fullOverlay.appendChild(startMessage);
+    document.body.appendChild(fullOverlay);
+    
+    // Disable all interactions with exam content behind overlay
+    document.getElementById('examContainer').style.pointerEvents = 'none';
     
     document.getElementById('startFullscreenBtn').addEventListener('click', async () => {
         try {
+            // Request fullscreen
             if (elem.requestFullscreen) {
                 await elem.requestFullscreen();
             } else if (elem.webkitRequestFullscreen) {
@@ -257,16 +389,57 @@ function requestFullscreenStart() {
                 await elem.msRequestFullscreen();
             }
             
-            // Remove the message
-            document.body.removeChild(startMessage);
+            // Wait a moment for fullscreen to activate
+            setTimeout(() => {
+                // Remove the overlay
+                if (fullOverlay && fullOverlay.parentNode) {
+                    document.body.removeChild(fullOverlay);
+                }
+                
+                // Re-enable exam interactions and show content
+                const examContainer = document.getElementById('examContainer');
+                examContainer.style.pointerEvents = 'all';
+                examContainer.style.opacity = '1';
+                examContainer.style.transition = 'opacity 0.3s ease-in';
+                
+                // Focus on the exam
+                window.focus();
+            }, 100);
             
-            // Focus on the exam
-            window.focus();
         } catch (err) {
             console.error('Fullscreen error:', err);
-            alert('Please allow fullscreen mode to start the exam. Press F11 or click the fullscreen button.');
-            // Try again
-            requestFullscreenStart();
+            
+            // Show error message
+            startMessage.innerHTML = `
+                <div style="font-size: 60px; color: #dc3545; margin-bottom: 20px;">⚠️</div>
+                <h3 style="margin: 0 0 20px 0; color: #dc3545; font-size: 24px;">Fullscreen Required</h3>
+                <p style="color: #666; margin-bottom: 15px; line-height: 1.6;">
+                    Please allow fullscreen mode to start the exam.
+                </p>
+                <p style="color: #333; margin-bottom: 25px;">
+                    You can also press <strong>F11</strong> to enter fullscreen mode.
+                </p>
+                <button id="retryFullscreenBtn" style="
+                    background: #dc3545;
+                    color: white;
+                    border: none;
+                    padding: 15px 40px;
+                    font-size: 18px;
+                    font-weight: 600;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+                ">
+                    Try Again
+                </button>
+            `;
+            
+            document.getElementById('retryFullscreenBtn').addEventListener('click', () => {
+                document.body.removeChild(fullOverlay);
+                document.getElementById('examContainer').style.pointerEvents = 'all';
+                requestFullscreenStart();
+            });
         }
     });
 }
@@ -305,20 +478,43 @@ function setupProctoring() {
     document.addEventListener('keydown', handleKeyDown);
 }
 
+let fullscreenReentryTimer = null;
+
 function handleFullscreenChange() {
+    // Clear any pending reentry
+    if (fullscreenReentryTimer) {
+        clearTimeout(fullscreenReentryTimer);
+        fullscreenReentryTimer = null;
+    }
+    
     if (!document.fullscreenElement && 
         !document.webkitFullscreenElement && 
         !document.mozFullScreenElement && 
         isExamActive) {
+        
+        // Log violation
         logViolation('Exited fullscreen mode');
         
+        // Disable exam interaction immediately
+        document.getElementById('examContainer').style.pointerEvents = 'none';
+        document.getElementById('examContainer').style.opacity = '0.3';
+        
         // Re-enter fullscreen after a brief delay
-        setTimeout(() => {
+        fullscreenReentryTimer = setTimeout(() => {
             if (isExamActive) {
                 enterFullscreen();
-                window.focus();
+                // Re-enable interaction after entering fullscreen
+                setTimeout(() => {
+                    document.getElementById('examContainer').style.pointerEvents = 'all';
+                    document.getElementById('examContainer').style.opacity = '1';
+                    window.focus();
+                }, 200);
             }
-        }, 100);
+        }, 500);
+    } else {
+        // Successfully in fullscreen
+        document.getElementById('examContainer').style.pointerEvents = 'all';
+        document.getElementById('examContainer').style.opacity = '1';
     }
 }
 
@@ -453,7 +649,8 @@ function handleKicked() {
     modal.show();
     
     setTimeout(() => {
-        window.location.href = '/student';
+        sessionStorage.clear();
+        window.location.href = '/';
     }, 5000);
 }
 
@@ -516,7 +713,8 @@ async function submitExam() {
             } else {
                 console.error('Modal element not found!');
                 alert('Exam submitted successfully! You will be redirected to the login page.');
-                window.location.href = '/student';
+                sessionStorage.clear();
+                window.location.href = '/';
             }
         } else {
             console.error('Submit failed:', data);
@@ -532,6 +730,47 @@ async function autoSubmitExam() {
     alert('Time is up! Your exam will be submitted automatically.');
     await submitExam();
 }
+
+// Question Palette Sliding Menu
+function openPalette() {
+    const sidebar = document.getElementById('questionPaletteSidebar');
+    const toggleBtn = document.getElementById('togglePaletteBtn');
+    
+    sidebar.style.left = '0px';
+    toggleBtn.style.display = 'none';
+}
+
+function closePalette() {
+    const sidebar = document.getElementById('questionPaletteSidebar');
+    const toggleBtn = document.getElementById('togglePaletteBtn');
+    
+    sidebar.style.left = '-300px';
+    toggleBtn.style.display = 'block';
+}
+
+document.getElementById('togglePaletteBtn').addEventListener('click', () => {
+    const sidebar = document.getElementById('questionPaletteSidebar');
+    const currentLeft = sidebar.style.left;
+    
+    if (currentLeft === '-300px' || currentLeft === '') {
+        openPalette();
+    } else {
+        closePalette();
+    }
+});
+
+document.getElementById('closePaletteBtn').addEventListener('click', () => {
+    closePalette();
+});
+
+// Close palette when clicking on a question number
+document.addEventListener('click', (e) => {
+    if (e.target.closest('.palette-btn')) {
+        setTimeout(() => {
+            closePalette();
+        }, 300);
+    }
+});
 
 // Initialize on page load
 window.addEventListener('load', initExam);

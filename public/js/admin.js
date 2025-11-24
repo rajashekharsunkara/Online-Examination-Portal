@@ -1,6 +1,19 @@
 let socket = io(); // Initialize Socket.io immediately
 let currentAdmin = null;
 
+// Socket connection monitoring
+socket.on('connect', () => {
+    console.log('✅ Connected to admin server:', socket.id);
+});
+
+socket.on('disconnect', () => {
+    console.log('❌ Disconnected from admin server');
+});
+
+socket.on('connect_error', (error) => {
+    console.error('❌ Socket connection error:', error);
+});
+
 // Initialize when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeAdmin);
@@ -80,6 +93,32 @@ function showDashboard() {
     
     // Listen for live violations
     socket.on('violation-alert', handleLiveAlert);
+    
+    // Listen for exam result updates
+    socket.on('exam-result-update', (data) => {
+        console.log('✅ Exam result update received:', data);
+        
+        // Refresh results table if on results tab
+        const resultsTab = document.getElementById('resultsTab');
+        if (resultsTab && resultsTab.classList.contains('active')) {
+            console.log('Refreshing results table...');
+            loadResults();
+        }
+        
+        // Refresh students table if on students tab
+        const studentsTab = document.getElementById('studentsTab');
+        if (studentsTab && studentsTab.classList.contains('active')) {
+            console.log('Refreshing students table...');
+            loadStudents();
+        }
+        
+        // Always refresh overview for live stats
+        console.log('Refreshing overview...');
+        loadOverview();
+        
+        // Show notification
+        showResultNotification(data);
+    });
     
     // Load initial data
     loadCenters();
@@ -1445,6 +1484,43 @@ function handleLiveAlert(data) {
             icon: '/favicon.ico'
         });
     }
+}
+
+// Show result notification
+function showResultNotification(data) {
+    // Show browser notification if permitted
+    if (Notification.permission === 'granted') {
+        new Notification('Exam Completed', {
+            body: `A student has submitted their exam. Score: ${data.score}/${data.total_marks}`,
+            icon: '/favicon.ico'
+        });
+    }
+    
+    // Show toast notification
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.style.cssText = `
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        background: #10b981;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 9999;
+        animation: slideIn 0.3s ease;
+    `;
+    toast.innerHTML = `
+        <strong>📝 Exam Submitted</strong><br>
+        Score: ${data.score}/${data.total_marks} (${data.percentage.toFixed(1)}%)
+    `;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
 }
 
 // Request notification permission on load

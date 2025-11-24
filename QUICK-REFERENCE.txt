@@ -1,0 +1,93 @@
+╔════════════════════════════════════════════════════════════════╗
+║           INDIA SKILLS 2025 - QUICK REFERENCE CARD             ║
+╚════════════════════════════════════════════════════════════════╝
+
+🚀 START THE PROJECT
+────────────────────────────────────────────────────────────────
+  start-india-skills.bat
+
+  This will setup everything with:
+  ✓ 48 Trades (all India Skills competitions)
+  ✓ 26 Districts (all AP districts)
+  ✓ ~65 Centers (2-3 per district)
+  ✓ 50 Test Students (ready to login)
+  ✓ 1,440 Questions (30 per trade)
+
+
+🔐 ADMIN LOGIN
+────────────────────────────────────────────────────────────────
+  URL:      http://localhost:3001/admin.html
+  Username: admin
+  Password: admin123
+
+
+👨‍🎓 STUDENT LOGIN (QUICK TEST)
+────────────────────────────────────────────────────────────────
+  URL:        http://localhost:3000
+  Admit Card: 2025SRI0001
+  DOB:        2000-01-15
+
+
+📋 MORE STUDENT TEST ACCOUNTS
+────────────────────────────────────────────────────────────────
+  All students use DOB: 2000-01-15
+  
+  Admit Cards (50 total):
+  2025SRI0001, 2025SRI0002, 2025SRI0003...
+  2025VIZ0001, 2025VIS0001, 2025GUN0001...
+  
+  Pattern: 2025 + DISTRICT_CODE + NUMBER
+
+
+🎯 FIRST 10 TRADES (WITH TEST STUDENTS)
+────────────────────────────────────────────────────────────────
+  1.  3D Digital Game Art
+  2.  Additive Manufacturing
+  3.  Autobody Repair
+  4.  Automobile Technology
+  5.  Autonomous Mobile Robotics
+  6.  Bakery
+  7.  Beauty Therapy
+  8.  Bricklaying
+  9.  Cabinetmaking
+  10. Car Painting
+
+  📚 ALL 48 TRADES HAVE QUESTIONS!
+  ✓ 3 trades with hand-crafted questions
+  ✓ 45 trades with auto-generated questions
+  ✓ Everyone can take exams!
+
+
+📍 ALL 26 DISTRICTS COVERED
+────────────────────────────────────────────────────────────────
+  Srikakulam, Vizianagaram, Visakhapatnam, Vijayawada,
+  Guntur, Tirupati, Kadapa, Kurnool, Ananthapuramu...
+  (See INDIA-SKILLS-TEST-DATA.md for full list)
+
+
+🔧 TROUBLESHOOTING
+────────────────────────────────────────────────────────────────
+  Port in use?       → kill-servers.bat
+  Database locked?   → kill-servers.bat
+  Fresh start?       → start-india-skills.bat
+
+
+📊 EXAM DETAILS
+────────────────────────────────────────────────────────────────
+  Duration:   90-120 minutes (varies by trade)
+  Questions:  30 MCQs per exam
+  Marks:      4 marks per question
+  Total:      120 marks per exam
+  Available:  ALL 48 trades (1,440 total questions)
+
+
+📚 DOCUMENTATION
+────────────────────────────────────────────────────────────────
+  INDIA-SKILLS-TEST-DATA.md  → Complete trade & district list
+  DATABASE-SETUP.md          → Database troubleshooting
+  TEST-CREDENTIALS.md        → All test accounts
+
+
+═══════════════════════════════════════════════════════════════
+  Save this file for quick reference during testing!
+═══════════════════════════════════════════════════════════════

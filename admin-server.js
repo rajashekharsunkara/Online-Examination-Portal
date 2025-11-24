@@ -39,6 +39,14 @@ app.post('/api/proctoring-alert', (req, res) => {
   res.json({ success: true });
 });
 
+// Endpoint for exam result updates (cross-server)
+app.post('/api/exam-result-update', (req, res) => {
+  const data = req.body;
+  console.log('Exam result update received, broadcasting to admins:', data);
+  io.to('admin-room').emit('exam-result-update', data);
+  res.json({ success: true });
+});
+
 // Admin login
 app.post('/api/admin/login', (req, res) => {
   const { username, password } = req.body;

@@ -29,10 +29,16 @@ app.post('/api/student/login', (req, res) => {
     WHERE s.admit_card_id = ? AND s.dob = ?
   `, [admit_card_id, dob], (err, student) => {
     if (err) {
-      return res.status(500).json({ error: 'Database error' });
+      return res.status(500).json({ 
+        success: false,
+        error: 'System error. Please try again or contact the examination center.'
+      });
     }
     if (!student) {
-      return res.status(401).json({ error: 'Invalid admit card ID or date of birth' });
+      return res.status(401).json({ 
+        success: false,
+        error: 'Invalid credentials. Please check your Admit Card ID and Date of Birth and try again.'
+      });
     }
 
     // Check if student already has an active session or was kicked
@@ -41,13 +47,20 @@ app.post('/api/student/login', (req, res) => {
         if (session) {
           if (session.status === 'kicked') {
             return res.status(403).json({ 
-              error: 'You have been disqualified from this exam due to multiple proctoring violations',
+              success: false,
+              error: 'Your examination session has been terminated due to multiple proctoring violations. Please contact your examination center for further assistance.',
               kicked: true
             });
           } else if (session.status === 'active') {
-            return res.status(400).json({ error: 'You already have an active exam session' });
+            return res.status(400).json({ 
+              success: false,
+              error: 'Your examination is currently in progress. If you were disconnected, please contact your examination center immediately.'
+            });
           } else if (session.status === 'completed') {
-            return res.status(400).json({ error: 'You have already completed this exam' });
+            return res.status(400).json({ 
+              success: false,
+              error: 'You have already completed this examination. Results will be announced through official channels. Thank you!'
+            });
           }
         }
 
@@ -73,6 +86,23 @@ app.post('/api/student/login', (req, res) => {
           exam: exam
         });
       });
+  });
+});
+
+// Check exam status endpoint
+app.get('/api/student/check-exam-status/:student_id', (req, res) => {
+  const studentId = req.params.student_id;
+  
+  db.get('SELECT status FROM exam_sessions WHERE student_id = ?', [studentId], (err, session) => {
+    if (err) {
+      return res.status(500).json({ error: 'Database error' });
+    }
+    
+    if (!session) {
+      return res.json({ status: 'not_started' });
+    }
+    
+    res.json({ status: session.status });
   });
 });
 
@@ -286,6 +316,32 @@ app.post('/api/student/submit-exam', (req, res) => {
             }
 
             console.log('Exam submitted successfully. Score:', score, 'Total:', totalMarks);
+            
+            // Send real-time update to admin server using native http
+            const httpReq = http.request({
+              hostname: 'localhost',
+              port: 3001,
+              path: '/api/exam-result-update',
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }, (httpRes) => {
+              console.log('Admin notification sent successfully');
+            });
+            
+            httpReq.on('error', (err) => {
+              console.error('Failed to notify admin server:', err.message);
+            });
+            
+            httpReq.write(JSON.stringify({
+              session_id: session_id,
+              score: score,
+              total_marks: totalMarks,
+              percentage: percentage,
+              timestamp: new Date().toISOString()
+            }));
+            httpReq.end();
             
             res.json({ 
               success: true,

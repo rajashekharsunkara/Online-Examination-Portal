@@ -7,118 +7,780 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/css/student-style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .navbar-transparent {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 30px;
+            margin: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-content {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-self: start;
+        }
+        
+        .navbar-left img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .navbar-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin: 0;
+            white-space: nowrap;
+            justify-self: center;
+        }
+        
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-self: end;
+        }
+        
+        .navbar-right img {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        @media (max-width: 992px) {
+            .navbar-title {
+                font-size: 1.2rem;
+            }
+            
+            .navbar-left img {
+                height: 40px;
+            }
+            
+            .navbar-right img {
+                height: 35px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-transparent {
+                padding: 10px 15px;
+                margin: 8px 15px;
+            }
+            
+            .navbar-content {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .navbar-title {
+                font-size: 1rem;
+                text-align: center;
+                width: 100%;
+                order: 2;
+                margin-top: 10px;
+            }
+            
+            .navbar-left {
+                order: 1;
+            }
+            
+            .navbar-right {
+                order: 1;
+            }
+        }
+        
+        /* Three Column Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 2px 1fr;
+            gap: 40px;
+            align-items: start;
+            padding: 15px 30px 20px;
+            max-width: 1600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: calc(100vh - 100px);
+            overflow: hidden;
+        }
+        
+        .left-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .center-divider {
+            width: 2px;
+            background: linear-gradient(180deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.6) 3%, 
+                rgba(255, 255, 255, 0.6) 97%, 
+                transparent 100%);
+            height: 100%;
+            align-self: stretch;
+            justify-self: center;
+        }
+        
+        .right-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            gap: 20px;
+        }
+        
+        .left-footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            padding: 15px 20px;
+            margin-top: auto;
+        }
+        
+        .left-footer p {
+            margin: 3px 0;
+            font-size: 0.85rem;
+        }
+        
+        .left-footer p:first-child {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        /* Feature Cards Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-width: 600px;
+        }
+        
+        .feature-card-custom {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 15px 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #5eead4 0%, #14b8a6 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
+        }
+        
+        .feature-icon i {
+            font-size: 24px;
+            color: #1e3a8a;
+        }
+        
+        .feature-card-custom h5 {
+            color: #1e3a8a;
+            font-weight: 700;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+        
+        .feature-card-custom p {
+            color: #475569;
+            font-size: 0.8rem;
+            margin: 0;
+            line-height: 1.3;
+        }
+        
+        /* Instructions Box */
+        .instructions-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 18px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            overflow: hidden;
+        }
+        
+        .instructions-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: #1e3a8a;
+        }
+        
+        .instructions-header i {
+            font-size: 1.2rem;
+        }
+        
+        .instructions-header h5 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+        
+        .instruction-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            color: #334155;
+            border-bottom: 1px solid rgba(30, 58, 138, 0.1);
+            font-size: 0.88rem;
+        }
+        
+        .instruction-item:last-child {
+            border-bottom: none;
+        }
+        
+        .instruction-item i {
+            color: #3b82f6;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        
+        /* Login Box */
+        .login-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 40px 35px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .login-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #5eead4 0%, #14b8a6 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 6px 20px rgba(20, 184, 166, 0.3);
+        }
+        
+        .login-icon i {
+            font-size: 45px;
+            color: #1e3a8a;
+        }
+        
+        .login-box h2 {
+            color: #1e3a8a;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1.7rem;
+        }
+        
+        .login-box p {
+            color: #475569;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+        
+        .btn-login-proceed {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+            width: 100%;
+        }
+        
+        .btn-login-proceed:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 58, 138, 0.4);
+        }
+        
+        /* Login Form Styles */
+        .login-form-container {
+            display: none;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        
+        .login-form-container.active {
+            display: block;
+            animation: slideDown 0.3s ease-out forwards;
+        }
+        
+        .login-form-container.hiding {
+            animation: slideUp 0.3s ease-out forwards;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+        
+        .auth-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 6px 20px rgba(30, 58, 138, 0.3);
+        }
+        
+        .auth-icon i {
+            font-size: 40px;
+            color: white;
+        }
+        
+        .login-form-container h3 {
+            color: #1e3a8a;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 1.6rem;
+        }
+        
+        .login-form-container p {
+            color: #475569;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #1e3a8a;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: #334155;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .form-group input::placeholder {
+            color: #94a3b8;
+        }
+        
+        .btn-submit-login {
+            width: 100%;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+            margin-top: 10px;
+        }
+        
+        .btn-submit-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 58, 138, 0.4);
+        }
+        
+        .btn-back {
+            width: 100%;
+            background: transparent;
+            color: #475569;
+            border: 2px solid #e2e8f0;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .btn-back:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+        
+        .initial-login-view {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        
+        .initial-login-view.hidden {
+            display: none;
+        }
+        
+        .initial-login-view.hiding {
+            animation: fadeOut 0.3s ease-out forwards;
+        }
+        
+        .initial-login-view.showing {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 1fr 2px 400px;
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .center-divider {
+                display: none;
+            }
+            
+            .right-content {
+                position: static;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container py-5">
-        <!-- Header Section with Logos -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-body py-4">
-                <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-                    <img src="/images/logo.png" alt="India Skills Logo" style="height: 70px; object-fit: contain;">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="/images/Skill_India.png" alt="Skill India" style="height: 60px; object-fit: contain;">
-                        <img src="/images/APSSDC_logo.png" alt="APSSDC" style="height: 60px; object-fit: contain;">
-                    </div>
-                </div>
-                <div class="text-center py-3">
-                    <h1 class="display-4 fw-bold text-primary mb-3">India Skills Examination Portal</h1>
-                    <p class="lead text-muted">Center-Based Online Examination System</p>
-                </div>
+    <!-- Compact Transparent Navigation Bar -->
+    <nav class="navbar-transparent">
+        <div class="navbar-content">
+            <div class="navbar-left">
+                <img src="/images/logo.png" alt="India Skills Logo">
+            </div>
+            <h1 class="navbar-title">India Skills Examination Portal</h1>
+            <div class="navbar-right">
+                <img src="/images/Skill_India.png" alt="Skill India">
+                <img src="/images/APSSDC_logo.png" alt="APSSDC">
             </div>
         </div>
+    </nav>
 
-        <!-- Main Action Card -->
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="card shadow-lg border-0">
-                    <div class="card-body text-center p-5">
-                        <div class="mb-4">
-                            <i class="bi bi-person-circle text-primary" style="font-size: 4rem;"></i>
-                        </div>
-                        <h2 class="card-title fw-bold mb-3">Student Login</h2>
-                        <p class="card-text text-muted mb-4">Access your examination using your Admit Card ID and Date of Birth</p>
-                        <a href="/student" class="btn btn-primary btn-lg px-5 py-3">
-                            <i class="bi bi-box-arrow-in-right me-2"></i>Proceed to Login
-                        </a>
+    <!-- Main Three Column Layout -->
+    <div class="main-layout">
+        <!-- Left Content -->
+        <div class="left-content">
+            <!-- Feature Cards Grid -->
+            <div class="feature-grid">
+                <div class="feature-card-custom">
+                    <div class="feature-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h5>Secure Authentication</h5>
+                    <p>Login with your Admit Card ID and Date of Birth</p>
+                </div>
+                
+                <div class="feature-card-custom">
+                    <div class="feature-icon">
+                        <i class="bi bi-camera-video"></i>
+                    </div>
+                    <h5>Proctored Examination</h5>
+                    <p>AI-based proctoring ensures exam integrity</p>
+                </div>
+                
+                <div class="feature-card-custom">
+                    <div class="feature-icon">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                    <h5>Timed Assessment</h5>
+                    <p>Complete your exam within the allocated time</p>
+                </div>
+                
+                <div class="feature-card-custom">
+                    <div class="feature-icon">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <h5>Instant Results</h5>
+                    <p>Get your scores immediately after submission</p>
+                </div>
+            </div>
+            
+            <!-- Important Instructions -->
+            <div class="instructions-box">
+                <div class="instructions-header">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <h5>Important Instructions</h5>
+                </div>
+                <div>
+                    <div class="instruction-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Ensure you have a stable internet connection</span>
+                    </div>
+                    <div class="instruction-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Keep your Admit Card and valid ID ready</span>
+                    </div>
+                    <div class="instruction-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Close all other applications and browser tabs</span>
+                    </div>
+                    <div class="instruction-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>The exam will be in fullscreen mode</span>
+                    </div>
+                    <div class="instruction-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Do not switch tabs or minimize the window</span>
+                    </div>
+                    <div class="instruction-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>You will be warned 3 times before disqualification</span>
                     </div>
                 </div>
+            </div>
+            
+            <!-- Left Side Footer -->
+            <div class="left-footer">
+                <p>&copy; 2025 India Skills Examination Portal</p>
+                <p>Powered by Andhra Pradesh Skill Development Corporation</p>
             </div>
         </div>
-
-        <!-- Information Cards -->
-        <div class="row g-4 mt-4">
-            <div class="col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow-sm hover-card">
-                    <div class="card-body text-center p-4">
-                        <div class="icon-circle bg-primary bg-opacity-10 mb-3 mx-auto">
-                            <i class="bi bi-shield-check text-primary fs-2"></i>
-                        </div>
-                        <h5 class="card-title fw-bold">Secure Authentication</h5>
-                        <p class="card-text text-muted small">Login with your Admit Card ID and Date of Birth</p>
+        
+        <!-- Center Divider -->
+        <div class="center-divider"></div>
+        
+        <!-- Right Content - Login Box -->
+        <div class="right-content">
+            <div class="login-box">
+                <!-- Initial View -->
+                <div id="initialLoginView" class="initial-login-view">
+                    <div class="login-icon">
+                        <i class="bi bi-person-circle"></i>
                     </div>
+                    <h2>Student Login</h2>
+                    <p>Access your examination using your Admit Card ID and Date of Birth</p>
+                    <button class="btn-login-proceed" onclick="showLoginForm()">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Proceed to Login
+                    </button>
+                </div>
+                
+                <!-- Login Form -->
+                <div id="loginFormContainer" class="login-form-container">
+                    <div class="auth-icon">
+                        <i class="bi bi-person-badge"></i>
+                    </div>
+                    <h3>Student Authentication</h3>
+                    <p>Enter your credentials to access the examination</p>
+                    
+                    <form id="studentLoginForm" onsubmit="handleStudentLogin(event)">
+                        <div class="form-group">
+                            <label for="admitCardId">Admit Card ID</label>
+                            <input 
+                                type="text" 
+                                id="admitCardId" 
+                                name="admitCardId" 
+                                placeholder="Enter your Admit Card ID"
+                                required
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dateOfBirth">Date of Birth</label>
+                            <input 
+                                type="date" 
+                                id="dateOfBirth" 
+                                name="dateOfBirth"
+                                placeholder="dd-mm-yyyy"
+                                required
+                            >
+                        </div>
+                        
+                        <button type="submit" class="btn-submit-login">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>LOGIN
+                        </button>
+                        
+                        <button type="button" class="btn-back" onclick="hideLoginForm()">
+                            <i class="bi bi-arrow-left me-2"></i>Back
+                        </button>
+                    </form>
                 </div>
             </div>
-
-            <div class="col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow-sm hover-card">
-                    <div class="card-body text-center p-4">
-                        <div class="icon-circle bg-info bg-opacity-10 mb-3 mx-auto">
-                            <i class="bi bi-camera-video text-info fs-2"></i>
-                        </div>
-                        <h5 class="card-title fw-bold">Proctored Examination</h5>
-                        <p class="card-text text-muted small">AI-based proctoring ensures exam integrity</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow-sm hover-card">
-                    <div class="card-body text-center p-4">
-                        <div class="icon-circle bg-primary bg-opacity-10 mb-3 mx-auto">
-                            <i class="bi bi-clock-history text-primary fs-2"></i>
-                        </div>
-                        <h5 class="card-title fw-bold">Timed Assessment</h5>
-                        <p class="card-text text-muted small">Complete your exam within the allocated time</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow-sm hover-card">
-                    <div class="card-body text-center p-4">
-                        <div class="icon-circle bg-info bg-opacity-10 mb-3 mx-auto">
-                            <i class="bi bi-graph-up text-info fs-2"></i>
-                        </div>
-                        <h5 class="card-title fw-bold">Instant Results</h5>
-                        <p class="card-text text-muted small">Get your scores immediately after submission</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Important Instructions -->
-        <div class="card border-primary mt-5">
-            <div class="card-header bg-primary bg-opacity-10">
-                <h5 class="mb-0"><i class="bi bi-exclamation-triangle-fill text-primary me-2"></i>Important Instructions</h5>
-            </div>
-            <div class="card-body">
-                <ul class="list-unstyled mb-0">
-                    <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>Ensure you have a stable internet connection</li>
-                    <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>Keep your Admit Card and valid ID ready</li>
-                    <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>Close all other applications and browser tabs</li>
-                    <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>The exam will be in fullscreen mode</li>
-                    <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>Do not switch tabs or minimize the window</li>
-                    <li class="mb-0"><i class="bi bi-check-circle-fill text-primary me-2"></i>You will be warned 3 times before disqualification</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="text-center mt-5 text-white-50">
-            <p class="mb-1">&copy; 2025 India Skills Examination Portal</p>
-            <p class="small">Powered by Andhra Pradesh Skill Development Corporation</p>
         </div>
     </div>
+    
+    <script>
+        function showLoginForm() {
+            const initialView = document.getElementById('initialLoginView');
+            const formContainer = document.getElementById('loginFormContainer');
+            
+            // Fade out initial view
+            initialView.classList.add('hiding');
+            
+            setTimeout(() => {
+                initialView.classList.add('hidden');
+                initialView.classList.remove('hiding');
+                
+                // Show form with animation
+                formContainer.style.display = 'block';
+                requestAnimationFrame(() => {
+                    formContainer.classList.add('active');
+                });
+            }, 300);
+        }
+        
+        function hideLoginForm() {
+            const initialView = document.getElementById('initialLoginView');
+            const formContainer = document.getElementById('loginFormContainer');
+            
+            // Slide up form
+            formContainer.classList.remove('active');
+            formContainer.classList.add('hiding');
+            
+            setTimeout(() => {
+                formContainer.style.display = 'none';
+                formContainer.classList.remove('hiding');
+                
+                // Show initial view with animation
+                initialView.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    initialView.classList.add('showing');
+                    setTimeout(() => {
+                        initialView.classList.remove('showing');
+                    }, 300);
+                });
+            }, 300);
+        }
+        
+        async function handleStudentLogin(event) {
+            event.preventDefault();
+            
+            const admitCardId = document.getElementById('admitCardId').value;
+            const dob = document.getElementById('dateOfBirth').value;
+            
+            try {
+                const response = await fetch('/api/student/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        admit_card_id: admitCardId, 
+                        dob: dob 
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    sessionStorage.setItem('studentData', JSON.stringify(data.student));
+                    sessionStorage.setItem('examData', JSON.stringify(data.exam));
+                    window.location.href = '/student.html';
+                } else {
+                    // Display the specific error message from the server
+                    alert(data.error || 'Login failed. Please check your credentials.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('An error occurred during login. Please try again.');
+            }
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
